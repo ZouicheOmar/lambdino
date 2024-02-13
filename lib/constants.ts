@@ -5,6 +5,18 @@ export const LAMBDA = {
     "https://xqmf3tylybjkosy232bgrj4agy0kwuzj.lambda-url.eu-west-3.on.aws/",
 }
 
+export const AXIOS_CONFIG = {
+  headers: {
+    "Content-Type": "application/json",
+  },
+}
+
+export const AXIOS_FORMDATA_CONFIG = {
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
+}
+
 //this  board is 8kb
 export const EXAMPLE_BOARD = {
   cards: {

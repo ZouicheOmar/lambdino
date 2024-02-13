@@ -1,6 +1,6 @@
 /** @format */
 
-import Drawer from "../Drawer/Drawer"
+import Drawer from "../drawer/Drawer"
 import Controls from "./components/Controls"
 
 const Panel = () => {

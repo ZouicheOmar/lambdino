@@ -331,7 +331,10 @@ const BodyFooter = () => {
 const Body = () => {
   return (
     <>
-      <DrawerContent className="text-sm border-none ring-none outline-none h-3/4 min-h-1/2">
+      <DrawerContent
+        className="text-sm border-none ring-none outline-none h-3/4 min-h-1/2"
+        onPointerDown={() => console.log("clicked on drawer body")}
+      >
         <BodyHeader />
         <div className="flex flex-col md:flex-row flex-grow min-w-full h-full gap-3 px-4 py-0  ">
           <BodyLeft />
