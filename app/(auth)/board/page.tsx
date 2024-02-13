@@ -1,6 +1,9 @@
 /** @format */
-
 "use client"
+
+import AuthNav from "@/components/AuthNav"
+import Panel from "@/components/Panel/Panel"
+import {Button} from "@/components/ui/button"
 import {
   describeTable,
   listTables,
@@ -9,12 +12,12 @@ import {
   queryItems,
   createTable,
   putItemWithJson,
-} from "@/app/utils/call-dynamo"
+} from "@/utils/call-dynamo"
 import {useEffect} from "react"
 
 export default function Page() {
   useEffect(() => {
-    const foo = async () => {
+    const calldb = async () => {
       //   const tables = await listTables()
       //   const result = await describeTable()
       //   const put = await putItem()
@@ -23,24 +26,20 @@ export default function Page() {
       //   const items = await queryItems()
       //   const table = await createTable()
     }
-    // console.log("in use effect")
-    foo()
+    calldb()
   }, [])
 
   return (
-    <div className="w-full">
-      <p>this is board page</p>
+    <div className="absolute w-screen h-screen bg-red-900/10">
+      <AuthNav />
+      {/* <Panel /> */}
+      <div className="w-full">
+        <p>board</p>
+        <Button onPointerDown={() => console.log("clicked")}> click</Button>
+      </div>
     </div>
   )
 }
-
-// var params = {
-//     TableName: "Movies",
-//     Item: {
-//       "year": 2010,
-//       "title": "Inception"
-//     }
-//   };
 
 //   dynamodb.putItem(params, function(err, data) {
 //     if (err) console.log(err);

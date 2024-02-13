@@ -14,7 +14,7 @@ export default async function Home() {
             <li>cached data and fetch calls</li>
           </ul>
 
-          <ul className="list-disc list-inside text-neutral-400">
+          <ul className="list-disc list-inside opacity-50">
             <span className="text-white">DONE</span>
             <li>Add item to dynamo db</li>
             <li>Query tables from dynamodb</li>
@@ -23,7 +23,7 @@ export default async function Home() {
             <li>
               look for the writing and reading capacity
               <br />
-              <span className="text-xs text-neutral-400">
+              <span className="text-xs ">
                 If i need to get a board with 20 cards and the reading capacity
                 is only 5, will I have a problem ?
               </span>
