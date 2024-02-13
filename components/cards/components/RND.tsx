@@ -3,72 +3,70 @@
 import {useCallback, useEffect} from "react"
 import {useShallow} from "zustand/react/shallow"
 
-import {cards} from "@/lib/cards"
-
 import {motion, useAnimate, useDragControls} from "framer-motion"
 import {Resizable} from "re-resizable"
 
-// import useUiStore from "@/stores/UiStore";
-// import { useCardStore } from "@/stores/cards";
+import {useCardStore} from "@/stores/cards"
+import useUiStore from "@/stores/uiStore"
 
 import {DragIcon} from "@/components/Icons"
-// import { pixelToNum } from "@/utils/positions";
+import {pixelToNum} from "@/utils/positions"
 
 export default function RND(props) {
   const {children, id} = props
   const [divScope, animate] = useAnimate()
   const dragControls = useDragControls()
 
-  //    const { select } = useUiStore((s) => s.select);
-  //    const { cards, setSize, putOnTop, setFolded, setPosition } = useCardStore(
-  //       useShallow((s) => ({
-  //          cards: s.cards,
-  //          setSize: s.setSize,
-  //          putOnTop: s.putOnTop,
-  //          setFolded: s.setFolded,
-  //          setPosition: s.setPosition,
-  //       }))
-  //    );
+  const select = useUiStore((s) => s.select)
+  const {cards, setSize, putOnTop, setFolded, setPosition} = useCardStore(
+    useShallow((s) => ({
+      cards: s.cards,
+      setSize: s.setSize,
+      putOnTop: s.putOnTop,
+      setFolded: s.setFolded,
+      setPosition: s.setPosition,
+    }))
+  )
 
   const card = cards[id]
   const {position, size, type} = card
 
-  //    useEffect(() => {
-  //       animate(divScope.current, {
-  //          x: position.left,
-  //          y: position.top,
-  //       });
-  //    }, [select]);
+  useEffect(() => {
+    animate(divScope.current, {
+      x: position.left,
+      y: position.top,
+    })
+  }, [select])
 
-  const startDrag = useCallback((event) => {
+  const startDrag = (event) => {
     dragControls.start(event)
+  }
+
+  const handleDragEnd = useCallback((e, info) => {
+    const {x, y} = info.offset
+    const {top, left} = position
+    const new_pos = {
+      top: top + y,
+      left: left + x,
+    }
+
+    setPosition(id, new_pos)
   })
 
-  //    const handleDragEnd = useCallback((e, info) => {
-  //       const { x, y } = info.offset;
-  //       const { top, left } = position;
-  //       const new_pos = {
-  //          top: top + y,
-  //          left: left + x,
-  //       };
+  const handleResizeStop = (e, direction, ref, delta, position) => {
+    const new_size = {
+      width: pixelToNum(ref.style.width),
+      height: pixelToNum(ref.style.height),
+    }
 
-  //       setPosition(id, new_pos);
-  //    });
+    setSize(id, new_size)
+    setFolded(id, false)
+  }
 
-  //    const handleResizeStop = (e, direction, ref, delta, position) => {
-  //       const new_size = {
-  //          width: pixelToNum(ref.style.width),
-  //          height: pixelToNum(ref.style.height),
-  //       };
-
-  //       setSize(id, new_size);
-  //       setFolded(id, false);
-  //    };
-
-  //    const handleBringToTop = (e) => {
-  //       e.stopPropagation();
-  //       putOnTop(id);
-  //    };
+  const handleBringToTop = (e) => {
+    e.stopPropagation()
+    putOnTop(id)
+  }
 
   return (
     <motion.div
@@ -78,15 +76,15 @@ export default function RND(props) {
       dragControls={dragControls}
       dragListener={false}
       dragMomentum={false}
-      //  onPointerDown={handleBringToTop}
-      //  onDragStart={handleBringToTop}
-      //  onDragEnd={handleDragEnd}
+      onPointerDown={handleBringToTop}
+      onDragStart={handleBringToTop}
+      onDragEnd={handleDragEnd}
       className="absolute w-fit h-fit cursor-default drop-shadow-2xl  "
     >
       <Resizable
         id={id + "-rnd"}
         size={size}
-        // onResizeStop={handleResizeStop}
+        onResizeStop={handleResizeStop}
         enable={{
           bottom: true,
           bottomRight: true,
@@ -100,7 +98,7 @@ export default function RND(props) {
       >
         <span
           className="absolute top-2 right-4 w-fit hover:cursor-grab mix-blend-difference"
-          //    onPointerDown={startDrag}
+          onPointerDown={startDrag}
         >
           <DragIcon className="" />
         </span>

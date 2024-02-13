@@ -20,6 +20,8 @@ import {selectSlice} from "./slices/select"
 import {tagsSlice} from "./slices/tags"
 import {withShortcutSlice} from "./slices/withShortcuts"
 
+import {boardsSlice} from "./slices/boards"
+
 export const useCardStore = create(
   immer((set, get) => ({
     ...messageSlice(set, get),
@@ -38,5 +40,6 @@ export const useCardStore = create(
     ...putOnTopSlice(set, get),
     ...selectSlice(set, get),
     ...withShortcutSlice(set, get),
+    ...boardsSlice(set, get),
   }))
 )

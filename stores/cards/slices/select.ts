@@ -1,43 +1,43 @@
 /** @format */
-import useUiStore from "@/stores/UiStore";
+import useUiStore from "@/stores/uiStore"
 
 export const selectSlice = (set, get) => ({
-   deleteSelected() {
-      const selected = useUiStore.getState().uiCards;
-      const to_delete = [];
-      const deleteCard = get().deleteCard;
+  deleteSelected() {
+    const selected = useUiStore.getState().uiCards
+    const to_delete = []
+    const deleteCard = get().deleteCard
 
-      console.log("selected items", selected);
+    console.log("selected items", selected)
 
-      for (const id in selected) {
-         if (selected[id].selected) {
-            console.log("item", id);
-            deleteCard(id);
-            to_delete.push(id);
-         } else {
-            continue;
-         }
+    for (const id in selected) {
+      if (selected[id].selected) {
+        console.log("item", id)
+        deleteCard(id)
+        to_delete.push(id)
+      } else {
+        continue
       }
+    }
 
-      useUiStore.getState().toggleSelect();
-   },
+    useUiStore.getState().toggleSelect()
+  },
 
-   foldSelected() {
-      const selected = useUiStore.getState().uiCards;
-      const toggleFoldCard = get().toggleFoldCard;
-      const cards = get().cards;
+  foldSelected() {
+    const selected = useUiStore.getState().uiCards
+    const toggleFoldCard = get().toggleFoldCard
+    const cards = get().cards
 
-      for (const id in selected) {
-         if (
-            selected[id].selected &&
-            !["markdown", "image"].includes(cards[id].type)
-         ) {
-            toggleFoldCard(id);
-         } else {
-            continue;
-         }
+    for (const id in selected) {
+      if (
+        selected[id].selected &&
+        !["markdown", "image"].includes(cards[id].type)
+      ) {
+        toggleFoldCard(id)
+      } else {
+        continue
       }
+    }
 
-      useUiStore.getState().toggleSelect();
-   },
-});
+    useUiStore.getState().toggleSelect()
+  },
+})

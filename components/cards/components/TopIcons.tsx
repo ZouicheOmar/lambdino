@@ -3,9 +3,9 @@
 import {useState} from "react"
 import {useShallow} from "zustand/react/shallow"
 
-import {cards} from "@/lib/cards"
-// import { useCardStore } from "@/stores/cards";
-// import useUiStore from "@/stores/UiStore";
+import {useCardStore} from "@/stores/cards"
+import useUiStore from "@/stores/UiStore"
+
 import {motion, AnimatePresence} from "framer-motion"
 
 import {ManageTagsDialog} from "@/components/text/Tags"
@@ -206,7 +206,7 @@ const ManageShortcutsDialog = (props) => {
 
 export default function TopIcons(props) {
   const {id} = props
-  //    const cards = useCardStore((s) => s.cards);
+  const cards = useCardStore((s) => s.cards)
   const {shortcut} = cards[id]
 
   return (

@@ -1,0 +1,40 @@
+/** @format */
+import {useState} from "react"
+import axios from "axios"
+import {v4 as uuidv4} from "uuid"
+
+import useUiStore from "@/stores/uiStore"
+import {useCardStore} from "@/stores/cards"
+
+import {AXIOS_FORMDATA_CONFIG} from "@/lib/constants"
+
+export default function useSubmitImage() {
+  const [file, setFile] = useState()
+  const addImageCard = useCardStore((s) => s.addImageCard)
+  const toggleInsertImageDialogOpen = useUiStore(
+    (s) => s.toggleInsertImageDialogOpen
+  )
+
+  const submit = async (e) => {
+    e.preventDefault()
+
+    const fd = new FormData()
+    const id = uuidv4().toString()
+
+    fd.append("image", file)
+    console.log("attemting to send image to server in useSubmitImage")
+    //  axios
+    //    .post(`${ROUTES.SAVE_IMAGE}${id}`, fd, AXIOS_FORMDATA_CONFIG)
+    //    .then((res) => {
+    //      const {dimension} = res.data
+    //      //set card loading
+    //      addImageCard(id, dimension)
+    //      toggleInsertImageDialogOpen(false)
+    //    })
+    //    .catch((err) => {
+    //      console.log(err)
+    //    })
+  }
+
+  return {setFile, submit}
+}

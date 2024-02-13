@@ -1,7 +1,11 @@
 /** @format */
 "use client"
 
-import AuthNav from "@/components/AuthNav"
+import useScroll from "@/hooks/useScroll"
+import useHotkey from "@/hooks/useHotkey"
+import useZoom from "@/hooks/useZoom"
+import usePointer from "@/hooks/usePointer"
+
 import Panel from "@/components/panel/Panel"
 import Board from "@/components/board/Board"
 import {Button} from "@/components/ui/button"
@@ -33,8 +37,19 @@ const OGWrapperStyle = {
 }
 
 export default function Page() {
+  const handleWheel = useScroll()
+  const {handlePointerDown, handlePointerMove} = usePointer()
+  useHotkey()
+  useZoom()
+
   return (
-    <div className="fixed w-full h-full top-0 left-0 m-0 pl-[11rem] pt-[2rem] box-border flex">
+    <div
+      className="fixed w-full h-full top-0 left-0 m-0 pl-[11rem] pt-[2rem] box-border flex"
+      onWheel={handleWheel}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      id="mainWrapper"
+    >
       <Panel />
       <Board />
     </div>

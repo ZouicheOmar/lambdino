@@ -1,15 +1,14 @@
 /** @format */
 
-// import {useState, useEffect} from "react"
+import {useState, useEffect} from "react"
 // import {useShallow} from "zustand/react/shallow"
 
-// import {useCardStore} from "@/stores/cards"
-// import useUiStore from "@/stores/UiStore"
+import {useCardStore} from "@/stores/cards"
+import useUiStore from "@/stores/uiStore"
 
-// import {closeDrawer} from "@/utils/positions"
+import {closeDrawer} from "@/utils/positions"
 
 import {Button} from "@/components/ui/button"
-
 import {
   Drawer as DrawerMenu,
   DrawerClose,
@@ -19,11 +18,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog"
-
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs"
-
 import {
   CheckCircledIcon,
   Cross2Icon,
@@ -47,12 +43,7 @@ const FilesList = () => {
     getFiles()
   }, [])
 
-  const handleSelectItem = (e, item) => {
-    selectModeOff()
-    getCards(item)
-
-    closeDrawer()
-  }
+  
 
   const handlePointerDown = (e) => {
     e.target.dataset.active = e.target.dataset.active === "on" ? "off" : "on"
@@ -61,13 +52,20 @@ const FilesList = () => {
 
      */
 
-  const fakeFilesList = [
-    "file 001",
-    "file 002",
-    "file 003",
-    "file 004",
-    "file 005",
-  ]
+  const getCards = useCardStore((s) => s.getCards)
+  const selectModeOff = useUiStore((s) => s.selectModeOff)
+
+  const handleSelectItem = (e, item) => {
+    selectModeOff()
+    getCards(item)
+    closeDrawer()
+  }
+
+  const getBoards = useCardStore((s) => s.getBoards)
+  const boards = useCardStore((s) => s.boards)
+  useEffect(() => {
+    getBoards()
+  }, [])
 
   return (
     // <TabsContent value="files">
@@ -106,11 +104,11 @@ const FilesList = () => {
     <TabsContent value="files">
       <div className="flex flex-col gap-3 ">
         <ul className="list-disc w-full list-inside ">
-          {fakeFilesList.map((item, index) => (
+          {boards.map((item, index) => (
             <li
               className="hover:bg-neutral-800 rounded cursor-pointer transition-colors h-[1.5rem] px-2 flex items-center justify-between"
               key={index}
-              //   onClick={(e) => handleSelectItem(e, item)}
+              onClick={(e) => handleSelectItem(e, item)}
             >
               <span className="flex items-center gap-1">
                 <FileIcon />

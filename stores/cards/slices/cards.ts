@@ -1,15 +1,15 @@
 /** @format */
 
-import useUiStore from "@/stores/UiStore"
+import useUiStore from "@/stores/uiStore"
 import axios from "axios"
-
-import useUiStore from "@/stores/UiStore"
 
 import {v4 as uuidv4} from "uuid"
 import {animate} from "framer-motion"
 
 import {getRectById} from "@/utils/positions"
 // import {ROUTES, AXIOS_CONFIG} from "@/utils/constants"
+
+import {BOARDS} from "@/lib/cards"
 
 import {AXIOS_CONFIG} from "@/lib/constants"
 
@@ -18,35 +18,50 @@ export const cardsSlice = (set, get) => ({
   idList: [],
   ids: [],
 
-  async getCards(fileName) {
-    axios
-      .get(`${ROUTES.SELECT_FILE}${fileName}`)
-      .then((res) => {
-        const cards = res.data.cards
-        const ids = []
+  // async getCards(fileName) {
+  //   axios
+  //     .get(`${ROUTES.SELECT_FILE}${fileName}`)
+  //     .then((res) => {
+  //       const cards = res.data.cards
+  //       const ids = []
 
-        for (const id in cards) {
-          ids.push(id)
-        }
+  //       for (const id in cards) {
+  //         ids.push(id)
+  //       }
 
-        set((state) => {
-          state.cards = cards
-          state.idList = Object.keys(cards)
-          state.ids = ids
-          state.fileName = fileName
-          return
-        })
-      })
-      .catch((err) => {
-        get().setMessage("no selected file")
+  //       set((state) => {
+  //         state.cards = cards
+  //         state.idList = Object.keys(cards)
+  //         state.ids = ids
+  //         state.fileName = fileName
+  //         return
+  //       })
+  //     })
+  //     .catch((err) => {
+  //       get().setMessage("no selected file")
 
-        if (!err.response) {
-          console.log("Error : NETWORK ERROR")
-        } else {
-          console.log(err.response.data.message)
-        }
-      })
-    return
+  //       if (!err.response) {
+  //         console.log("Error : NETWORK ERROR")
+  //       } else {
+  //         console.log(err.response.data.message)
+  //       }
+  //     })
+  //   return
+  // },
+  async getCards(boardName) {
+    const cards = BOARDS[boardName].cards
+    const ids = []
+    console.log(cards)
+    for (const id in cards) {
+      ids.push(id)
+    }
+    set((state) => {
+      state.cards = cards
+      state.idList = Object.keys(cards)
+      state.ids = ids
+      state.fileName = boardName
+      return
+    })
   },
 
   addCard(type: string | null) {
