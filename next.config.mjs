@@ -9,7 +9,7 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: process.env.NEXT_PUBLIC_AWS_BUCKET_URL,
-        pathname: "/media/**",
+        pathname: "/*",
       },
     ],
   },

@@ -1,13 +1,15 @@
 /** @format */
-import {useCardStore} from "@/stores/cards"
 import useUiStore from "@/stores/uiStore"
-
+import {useCardStore} from "@/stores/cards"
 import {getRectById} from "../utils/positions"
 import {useCallback} from "react"
 
 export default function usePointer() {
-  const {setMx, setMy, selectModeOff} = useUiStore()
-  const {groupSelected, groupMode} = useCardStore()
+  const selectModeOff = useUiStore((s) => s.selectModeOff)
+  const setMx = useUiStore((s) => s.setMx)
+  const setMy = useUiStore((s) => s.setMy)
+  const groupSelected = useCardStore((s) => s.groupSelected)
+  const groupMode = useCardStore((s) => s.groupMode)
 
   const handlePointerDown = useCallback((e) => {
     setMx(e.nativeEvent.clientX)

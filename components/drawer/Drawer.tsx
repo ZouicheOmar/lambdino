@@ -8,6 +8,8 @@ import useUiStore from "@/stores/uiStore"
 
 import {closeDrawer} from "@/utils/positions"
 
+import putBoard from "@/utils/putBoard"
+
 import {Button} from "@/components/ui/button"
 import {
   Drawer as DrawerMenu,
@@ -26,6 +28,8 @@ import {
   EyeOpenIcon,
   FileIcon,
 } from "@radix-ui/react-icons"
+import {Toaster, toast} from "sonner"
+import {useUserStore} from "@/stores/user"
 
 const FilesList = () => {
   /**
@@ -54,18 +58,17 @@ const FilesList = () => {
 
   const getCards = useCardStore((s) => s.getCards)
   const selectModeOff = useUiStore((s) => s.selectModeOff)
+  const topLeft = useUiStore((s) => s.topLeft)
 
   const handleSelectItem = (e, item) => {
     selectModeOff()
     getCards(item)
     closeDrawer()
+    topLeft()
   }
 
-  const getBoards = useCardStore((s) => s.getBoards)
   const boards = useCardStore((s) => s.boards)
-  useEffect(() => {
-    getBoards()
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     // <TabsContent value="files">
@@ -104,19 +107,25 @@ const FilesList = () => {
     <TabsContent value="files">
       <div className="flex flex-col gap-3 ">
         <ul className="list-disc w-full list-inside ">
-          {boards.map((item, index) => (
-            <li
-              className="hover:bg-neutral-800 rounded cursor-pointer transition-colors h-[1.5rem] px-2 flex items-center justify-between"
-              key={index}
-              onClick={(e) => handleSelectItem(e, item)}
-            >
-              <span className="flex items-center gap-1">
-                <FileIcon />
-                {item}
-              </span>
-              <Cross2Icon className="h-full self-end	 hover:bg-red-900 transition-colors rounded-sm hover:text-red-500 hover:cursor-pointer" />
-            </li>
-          ))}
+          {boards.length ? (
+            boards.map((item, index) => (
+              <li
+                className="hover:bg-neutral-800 rounded cursor-pointer transition-colors h-[1.5rem] px-2 flex items-center justify-between"
+                key={index}
+                onClick={(e) => handleSelectItem(e, item)}
+              >
+                <span className="flex items-center gap-1">
+                  <FileIcon />
+                  {item}
+                </span>
+                <Cross2Icon className="h-full self-end	 hover:bg-red-900 transition-colors rounded-sm hover:text-red-500 hover:cursor-pointer" />
+              </li>
+            ))
+          ) : (
+            <p className="text-start p-6">
+              No boards here, please create a new board
+            </p>
+          )}
         </ul>
       </div>
     </TabsContent>
@@ -211,11 +220,26 @@ const BodyFiles = () => {
 
 const BodyCreateNewFile = () => {
   const createFile = useCardStore((state) => state.createFile)
+  const createBoard = useCardStore((state) => state.createBoard)
+  const boards = useCardStore((state) => state.boards)
   const [value, setValue] = useState("")
+  const [errorMessage, setErrorMessage] = useState("")
+  const userId = useUserStore((s) => s.userId)
 
   const handlecreateFile = async (e) => {
     e.preventDefault()
-    createFile(value)
+    console.log(boards)
+    if (boards.includes(value)) {
+      setValue("")
+      setErrorMessage("a board with this name already exists")
+      return
+    }
+    createBoard(value)
+  }
+
+  const handleChange = (e) => {
+    setErrorMessage("")
+    setValue(e.target.value)
   }
 
   return (
@@ -230,7 +254,7 @@ const BodyCreateNewFile = () => {
           placeholder="name"
           value={value}
           className="bg-neutral-950 grow px-2 py-1 ring-neutral-800 ring-[1px] rounded-[6px]"
-          onChange={(e) => setValue(e.target.value)}
+          onChange={handleChange}
         />
         <Button
           className="w-full md:w-1/3 ring-[1px] outline-none bg-neutral-950 ring-neutral-800"
@@ -239,6 +263,11 @@ const BodyCreateNewFile = () => {
           add
         </Button>
       </form>
+      {errorMessage && (
+        <p className="mt-1 animate-in fade-in-10 duration-500 bg-destructive/35 border rounded border-destructive text-destructive-foreground p-1 text-sm">
+          {errorMessage}
+        </p>
+      )}
     </div>
   )
 }
@@ -247,7 +276,7 @@ const BodyLeft = () => {
   return (
     <div className="flex flex-col gap-3 w-full md:w-2/5">
       <BodyFiles />
-      {/* <BodyCreateNewFile /> */}
+      <BodyCreateNewFile />
     </div>
   )
 }
@@ -292,22 +321,18 @@ const Trigger = () => {
 }
 
 const BodyHeader = () => {
-  //   const fileName = useCardStore((s) => s.fileName)
-  const fileName = "drawer title"
+  const fileName = useCardStore((s) => s.fileName)
   return (
-    <DrawerHeader className="">
+    <DrawerHeader className=" flex justify-between">
       <DrawerTitle className="inline-flex items-center justify-start gap-1 content-center">
-        {/* {fileName === "" ? (
+        {fileName === "" ? (
           <span>Empty Mess</span>
         ) : (
           <>
             <FileIcon />
             <span>{fileName}</span>
           </>
-        )} */}
-
-        <FileIcon />
-        <span>{fileName}</span>
+        )}
       </DrawerTitle>
     </DrawerHeader>
   )
@@ -330,7 +355,7 @@ const Body = () => {
   return (
     <>
       <DrawerContent
-        className="text-sm border-none ring-none outline-none h-3/4 min-h-1/2"
+        className="text-sm border-none ring-none outline-none h-full "
         onPointerDown={() => console.log("clicked on drawer body")}
       >
         <BodyHeader />
@@ -363,6 +388,7 @@ export default function Drawer() {
     <DrawerMenu>
       <Trigger />
       <Body />
+      <Toaster />
     </DrawerMenu>
   )
 }

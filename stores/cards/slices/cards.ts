@@ -1,78 +1,80 @@
 /** @format */
-
+import {useUserStore} from "@/stores/user"
 import useUiStore from "@/stores/uiStore"
-import axios from "axios"
+
+import {deleteImageFromBucket} from "@/utils/deleteImageFromBucket"
+
+import queryBoardItems from "@/utils/queryBoardItems"
 
 import {v4 as uuidv4} from "uuid"
-import {animate} from "framer-motion"
 
 import {getRectById} from "@/utils/positions"
-// import {ROUTES, AXIOS_CONFIG} from "@/utils/constants"
-
-import {BOARDS} from "@/lib/cards"
-
-import {AXIOS_CONFIG} from "@/lib/constants"
 
 export const cardsSlice = (set, get) => ({
   cards: {},
   idList: [],
   ids: [],
 
-  // async getCards(fileName) {
-  //   axios
-  //     .get(`${ROUTES.SELECT_FILE}${fileName}`)
-  //     .then((res) => {
-  //       const cards = res.data.cards
-  //       const ids = []
-
-  //       for (const id in cards) {
-  //         ids.push(id)
-  //       }
-
-  //       set((state) => {
-  //         state.cards = cards
-  //         state.idList = Object.keys(cards)
-  //         state.ids = ids
-  //         state.fileName = fileName
-  //         return
-  //       })
-  //     })
-  //     .catch((err) => {
-  //       get().setMessage("no selected file")
-
-  //       if (!err.response) {
-  //         console.log("Error : NETWORK ERROR")
-  //       } else {
-  //         console.log(err.response.data.message)
-  //       }
-  //     })
-  //   return
-  // },
   async getCards(boardName) {
-    const cards = BOARDS[boardName].cards
-    const ids = []
-    console.log(cards)
-    for (const id in cards) {
-      ids.push(id)
-    }
-    set((state) => {
-      state.cards = cards
-      state.idList = Object.keys(cards)
-      state.ids = ids
-      state.fileName = boardName
+    const closedBoards = get().closedBoards
+    const boardToClose = get().openBoard
+
+    if (closedBoards[boardName]) {
+      const cards = closedBoards[boardName]
+
+      const ids = []
+
+      for (const id in cards) {
+        ids.push(id)
+      }
+
+      set((state) => {
+        state.closedBoards[boardToClose] = state.cards
+        state.cards = cards
+        state.idList = Object.keys(cards)
+        state.ids = ids
+        state.fileName = boardName
+        state.openBoard = boardName
+        if (state.closedBoards[boardName]) {
+          delete state.closedBoards[boardName]
+        }
+        return
+      })
+      useUiStore.getState().initCards()
       return
-    })
+      //
+    }
+
+    const userId = useUserStore.getState().userId
+    queryBoardItems(userId, boardName)
+      .then((res) => {
+        const ids = []
+        const cards = JSON.parse(res)
+        for (const id in cards) {
+          ids.push(id)
+        }
+        set((state) => {
+          state.closedBoards[boardToClose] = state.cards
+          if (state.closedBoards[boardName]) {
+            delete state.closedBoards[boardName]
+          }
+          state.cards = cards
+          state.idList = Object.keys(cards)
+          state.ids = ids
+          state.fileName = boardName
+          state.openBoard = boardName
+        })
+        useUiStore.getState().initCards()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   },
 
   addCard(type: string | null) {
-    console.log(`from add card type : ${type}`)
     const {mx, my, addUiCard} = useUiStore.getState()
     const {top, left} = getRectById("board")
     const id = uuidv4().toString()
-
-    console.log(`from addcard : ${left} ${top}`)
-    console.log(`from addcard : ${mx}`)
-    console.log(`from addcard : ${my}`)
 
     let size = {width: 300, height: 200}
     let data = ""
@@ -123,7 +125,7 @@ export const cardsSlice = (set, get) => ({
     })
   },
 
-  addImageCard: (id, dimension) => {
+  addImageCard: (id) => {
     useUiStore.getState().selectModeOff()
 
     const fileName = get().fileName
@@ -133,38 +135,41 @@ export const cardsSlice = (set, get) => ({
     const mx = useUiStore.getState().insertImageX
     const my = useUiStore.getState().insertImageY
 
-    const {width, height} = dimension
+    // const {width, height} = dimension
 
-    let size
-    if (width <= 700 || height <= 700) {
-      size = {
-        width: width / 2,
-        height: height / 2,
-      }
-    } else if (width <= 1300 || height <= 1300) {
-      size = {
-        width: width / 3,
-        height: height / 3,
-      }
-    } else if (width <= 1600 || height <= 1600) {
-      size = {
-        width: width / 4,
-        height: height / 4,
-      }
-    } else if (width <= 2000 || height <= 2000) {
-      size = {
-        width: width / 6,
-        height: height / 6,
-      }
-    } else {
-      size = {
-        width: width / 9,
-        height: height / 9,
-      }
+    // let size
+    // if (width <= 700 || height <= 700) {
+    //   size = {
+    //     width: width / 2,
+    //     height: height / 2,
+    //   }
+    // } if (width <= 1300 || height <= 1300) {
+    //   size = {
+    //     width: width / 3,
+    //     height: height / 3,
+    //   }
+    // } if (width <= 1600 || height <= 1600) {
+    //   size = {
+    //     width: width / 4,
+    //     height: height / 4,
+    //   }
+    // } if (width <= 2000 || height <= 2000) {
+    //   size = {
+    //     width: width / 6,
+    //     height: height / 6,
+    //   }
+    // } else {
+    //   size = {
+    //     width: width / 9,
+    //     height: height / 9,
+    //   }
+    // }
+
+    const size = {
+      width: 300,
+      height: 200,
     }
-
-    const aspect = width / height
-
+    const aspect = size.width / size.height
     const newCard = {
       [id]: {
         id: id,
@@ -197,32 +202,19 @@ export const cardsSlice = (set, get) => ({
       return
     })
 
-    get().writeThisFile(false)
+    // get().writeThisFile(false)
   },
 
-  deleteCard: (id) => {
+  deleteCard: async (id) => {
     const {type} = get().cards[id]
     set((s) => {
       delete s.cards[id]
     })
     useUiStore.getState().deleteUiCard(id)
     if (type === "image") {
-      axios
-        .post(
-          `${ROUTES.DELETE_IMAGE}${id}`,
-          {
-            action: "deleting file",
-          },
-          AXIOS_CONFIG
-        )
-        .then((res) => {
-          console.log(res)
-          return
-        })
-        .catch((err) => {
-          console.log(err)
-          console.log("problem deleting image")
-        })
+      const userId = useUserStore.getState().userId
+      const openBoard = get().openBoard
+      const result = await deleteImageFromBucket(userId, openBoard, id)
     }
     // get().writeThisFile(false);
   },

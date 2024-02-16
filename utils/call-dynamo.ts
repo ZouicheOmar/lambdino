@@ -8,9 +8,10 @@ import {
   GetItemCommand,
   CreateTableCommand,
   BatchGetItemCommand,
+  BatchWriteItemCommand,
 } from "@aws-sdk/client-dynamodb"
 
-import {EXAMPLE_BOARD, BIG_BOARD} from "@/app/lib/constants"
+// import {EXAMPLE_BOARD, BIG_BOARD} from "@/app/lib/constants"
 
 const dbclient = new DynamoDBClient({
   region: "eu-west-3",
@@ -208,6 +209,84 @@ export async function putItemWithJson() {
     console.log(result)
   } catch (err) {
     console.log(err)
+  }
+}
+
+export async function writeItems() {
+  const tableName = ""
+  try {
+    const input = {
+      RequestItems: {
+        notes: [
+          {
+            PutRequest: {
+              Item: {
+                user001: {
+                  S: "apt",
+                },
+                board001: {
+                  S: "ast",
+                },
+                content: {
+                  S: "content for board one",
+                },
+              },
+            },
+          },
+          {
+            PutRequest: {
+              Item: {
+                userId: {
+                  S: "userId",
+                },
+                board: {
+                  S: "ast",
+                },
+                cards: {
+                  S: "content for board one",
+                },
+              },
+            },
+          },
+          {
+            PutRequest: {
+              Item: {
+                user001: {
+                  S: "apt",
+                },
+                board001: {
+                  S: "astt",
+                },
+                content: {
+                  S: "second content",
+                },
+              },
+            },
+          },
+          {
+            PutRequest: {
+              Item: {
+                user001: {
+                  S: "apt",
+                },
+                board001: {
+                  S: "st",
+                },
+                content: {
+                  S: "third content",
+                },
+              },
+            },
+          },
+        ],
+      },
+    }
+    const command = new BatchWriteItemCommand(input)
+    const response = await dbclient.send(command)
+    console.log(response)
+  } catch (err) {
+    console.log(err)
+    throw err
   }
 }
 

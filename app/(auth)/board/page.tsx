@@ -5,42 +5,19 @@ import useScroll from "@/hooks/useScroll"
 import useHotkey from "@/hooks/useHotkey"
 import useZoom from "@/hooks/useZoom"
 import usePointer from "@/hooks/usePointer"
+import useInitBoard from "@/hooks/useInitBoard"
 
 import Panel from "@/components/panel/Panel"
 import Board from "@/components/board/Board"
-import {Button} from "@/components/ui/button"
-import {
-  describeTable,
-  listTables,
-  putItem,
-  getItem,
-  queryItems,
-  createTable,
-  putItemWithJson,
-} from "@/utils/call-dynamo"
-import {useEffect} from "react"
-
-const OGWrapperStyle = {
-  position: "fixed",
-  width: "100%",
-  height: "100%",
-  top: "0",
-  left: "0",
-  contain: "strict",
-  margin: "0",
-  boxSizing: "border-box",
-  display: "flex",
-  paddingLeft: "11rem",
-  paddingTop: "2rem",
-  alignItems: "flex-start",
-  justifyContent: "flex-start",
-}
+import {Toaster} from "@/components/ui/sonner"
 
 export default function Page() {
-  const handleWheel = useScroll()
-  const {handlePointerDown, handlePointerMove} = usePointer()
   useHotkey()
   useZoom()
+  useInitBoard()
+
+  const handleWheel = useScroll()
+  const {handlePointerDown, handlePointerMove} = usePointer()
 
   return (
     <div
@@ -52,19 +29,7 @@ export default function Page() {
     >
       <Panel />
       <Board />
+      <Toaster />
     </div>
   )
 }
-
-// useEffect(() => {
-//   const calldb = async () => {
-//     //   const tables = await listTables()
-//     //   const result = await describeTable()
-//     //   const put = await putItem()
-//     //   const item = await getItem()
-//     //   const putJson = await putItemWithJson()
-//     //   const items = await queryItems()
-//     //   const table = await createTable()
-//   }
-//   calldb()
-// }, [])

@@ -83,14 +83,15 @@ export default function RND(props) {
     >
       <Resizable
         id={id + "-rnd"}
-        size={size}
+        // size={size}
+        size={type === "image" ? undefined : size}
         onResizeStop={handleResizeStop}
         enable={{
           bottom: true,
           bottomRight: true,
           right: true,
         }}
-        // lockAspectRatio={type === "image" && cards[id].aspect}
+        lockAspectRatio={type === "image" && true}
         minWidth="300px"
         maxWidth="1500px"
         minHeight={type === "markdown" ? "80px" : "56px"}

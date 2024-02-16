@@ -3,7 +3,7 @@
 import {useCallback} from "react"
 import {useShallow} from "zustand/react/shallow"
 
-// import { useCardStore } from "@/stores/cards";
+import {useCardStore} from "@/stores/cards"
 
 import RND from "./components/RND"
 import Header from "./components/Header"
@@ -13,50 +13,50 @@ import BottomIcons from "./components/BottomIcons"
 const Body = (props) => {
   const {card} = props
   const {id, data} = card
-  // const {setData, writeThisFile, setActive} = useCardStore(
-  //   useShallow((s) => ({
-  //     setData: s.setData,
-  //     writeThisFile: s.writeThisFile,
-  //     setActive: s.setActive,
-  //   }))
-  // )
+  const {setData, writeThisFile, setActive} = useCardStore(
+    useShallow((s) => ({
+      setData: s.setData,
+      writeThisFile: s.writeThisFile,
+      setActive: s.setActive,
+    }))
+  )
 
-  // const handleChange = useCallback((e) => {
-  //   setData(id, e.target.value)
-  // })
+  const handleChange = useCallback((e) => {
+    setData(id, e.target.value)
+  })
 
-  // const handleKeyDown = useCallback((e) => {
-  //   if ((e.code === "Enter" && e.shiftKey) || e.code === "Escape") {
-  //     setData(id, e.target.value)
-  //     e.target.blur()
-  //   }
-  // })
+  const handleKeyDown = useCallback((e) => {
+    if ((e.code === "Enter" && e.shiftKey) || e.code === "Escape") {
+      setData(id, e.target.value)
+      e.target.blur()
+    }
+  })
 
-  // const handleBlur = (e) => {
-  //   setData(id, e.target.value)
-  //   // writeThisFile(false)
-  // }
+  const handleBlur = (e) => {
+    setData(id, e.target.value)
+    // writeThisFile(false)
+  }
 
   const stopPropagation = (e) => e.stopPropagation()
 
-  // const handleFocus = () => {
-  //   setActive(id)
-  // }
+  const handleFocus = () => {
+    setActive(id)
+  }
 
   return (
     <div className="grow nondrag max-h-full min-h-0 px-1 pt-1 rounded-[6px] flex text-sm">
       <textarea
-        className="w-full resize-none bg-inherit px-1 pt-1  focus:bg-neutral-700/25 transition-colors  duration-300 focus:ring-indigo-500 focus:ring-[1px] focus:outline-none"
+        className="w-full resize-none bg-inherit px-1 pt-1  focus:bg-neutral-700/25 transition-colors  duration-300 focus:ring-indigo-500 focus:ring-[1px] rounded-md focus:outline-none"
         placeholder="note..."
         id={`${id}-textarea`}
         value={data}
-        // onChange={handleChange}
-        // onBlur={handleBlur}
+        onChange={handleChange}
+        onBlur={handleBlur}
         spellCheck={false}
-        // onKeyDown={handleKeyDown}
-        // onWheel={stopPropagation}
+        onKeyDown={handleKeyDown}
+        onWheel={stopPropagation}
         onScroll={stopPropagation}
-        // onFocus={handleFocus}
+        onFocus={handleFocus}
       />
     </div>
   )
@@ -69,7 +69,7 @@ const Note = (props) => {
   return (
     <>
       <RND id={id}>
-        <div className="w-full h-full select-none border-[1px] border-neutral-700/50 flex flex-col fade-in slide-in-from-top-5 duration-300  bg-slate-950  rounded-[6px]">
+        <div className="w-full h-full select-none border rounded-md flex flex-col fade-in slide-in-from-top-5 duration-300  bg-card">
           <Header
             id={id}
             title={title}

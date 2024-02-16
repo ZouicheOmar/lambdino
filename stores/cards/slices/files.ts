@@ -1,14 +1,13 @@
 /** @format */
 
-import axios from "axios"
-import {openDrawer, closeDrawer} from "@/utils/positions"
+import {openDrawer} from "@/utils/positions"
 
-import {AXIOS_CONFIG} from "@/lib/constants"
+import {writeBoards} from "@/utils/writeBoard"
 
 import {toast} from "sonner"
+import {useUserStore} from "@/stores/user"
 
 export const filesSlice = (set, get) => ({
-  //    file_name: "",
   fileName: "",
 
   getLastFile() {
@@ -28,46 +27,77 @@ export const filesSlice = (set, get) => ({
   },
 
   async writeThisFile(showToast = true) {
-    const {cards, getCards, fileName} = get()
+    const {cards, getCards, fileName, closedBoards} = get()
+    const userId = useUserStore.getState().userId
 
-    if (fileName === "") {
-      toast.error("Can't save, not in a board", {})
-      return
+    const request = {
+      RequestItems: {
+        messBoard: [],
+      },
     }
 
-    const data = {
-      cards: cards,
+    const makeRequest = (userId: string, boardName: string, cards: Object) => {
+      return {
+        PutRequest: {
+          Item: {
+            userId: {
+              S: userId,
+            },
+            board: {
+              S: boardName,
+            },
+            cards: {
+              S: JSON.stringify(cards),
+            },
+          },
+        },
+      }
     }
 
-    axios
-      .post(`${ROUTES.SAVE_FILE}${fileName}`, data, AXIOS_CONFIG)
-      .then(() => {
-        showToast && toast.success("saved", {})
-        //why do i call get cards in here ?
-        getCards(fileName)
-      })
-      .catch((err) => {
-        showToast && toast.error("problem saving file", {})
-        console.log(err)
-      })
+    const firstCard = makeRequest(userId, fileName, cards)
+    request.RequestItems.messBoard.push(firstCard)
+
+    const closedBoardsArray = Object.entries(closedBoards)
+    for (let i = 1; i < closedBoardsArray.length; i++) {
+      const boardName = closedBoardsArray[i][0]
+      const cards = closedBoardsArray[i][1]
+      const input = makeRequest(userId, boardName, cards)
+      request.RequestItems.messBoard.push(input)
+    }
+
+    const saving = await writeBoards(request)
+    toast.success("saved")
+    //makeRequestInput for cards
+    //if closedBoards.length > 1
+    // makeRequestInput foreach element
+
+    //when done, return the total request item
+
+    // if (fileName === "") {
+    //   toast.error("Can't save, not in a board", {})
+    //   return
+    // }
+
+    // const data = {
+    //   cards: cards,
+    // }
   },
 
-  async createFile(fileName: string) {
-    const getCards = get().getCards
-    console.log(`from store in createFile : ${fileName}`)
-    const data = {
-      fileName: fileName,
-    }
+  // async createFile(fileName: string) {
+  //   const getCards = get().getCards
+  //   const data = {
+  //     fileName: fileName,
+  //   }
 
-    await axios
-      .post(ROUTES.CREATE_FILE, data, AXIOS_CONFIG)
-      .then((res) => {
-        console.log(`file supposedly created : ${res.data}`)
-        getCards(fileName)
-        closeDrawer()
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  },
+  //   await axios
+  //     .post(ROUTES.CREATE_FILE, data, AXIOS_CONFIG)
+  //     .then((res) => {
+  //       console.log(`file supposedly created : ${res.data}`)
+  //       getCards(fileName)
+  //       closeDrawer()
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // },
 })

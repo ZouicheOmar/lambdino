@@ -1,7 +1,7 @@
 /** @format */
 
 import {useCallback} from "react"
-// import { useCardStore } from "@/stores/cards";
+import {useCardStore} from "@/stores/cards"
 import {cva} from "class-variance-authority"
 import {cn} from "@/lib/cn"
 
@@ -36,17 +36,17 @@ const variants = cva(
 export default function Header(props) {
   const {id, title, className, variant, size} = props
   //    const writeThisFile = useCardStore((s) => s.writeThisFile);
-  //    const setTitle = useCardStore((s) => s.setTitle);
+  const setTitle = useCardStore((s) => s.setTitle)
 
-  //   const handleTitleChange = useCallback((e) => {
-  //     setTitle(e, id)
-  //   }, [])
+  const handleTitleChange = useCallback((e) => {
+    setTitle(e, id)
+  }, [])
 
-  //   const handleKeyDown = useCallback((e) => {
-  //     if (["Enter", "Escape"].includes(e.code)) {
-  //       e.target.blur()
-  //     }
-  //   }, [])
+  const handleKeyDown = useCallback((e) => {
+    if (["Enter", "Escape"].includes(e.code)) {
+      e.target.blur()
+    }
+  }, [])
 
   return (
     <div className={cn(variants({variant, size, className}))}>
@@ -55,8 +55,8 @@ export default function Header(props) {
         name="title"
         size={10}
         value={title}
-        // onKeyDown={handleKeyDown}
-        // onChange={handleTitleChange}
+        onKeyDown={handleKeyDown}
+        onChange={handleTitleChange}
         placeholder={title || "title"}
         // onBlur={//NOOOOOOOOO number of write will be crazyy() => writeThisFile(false)}
       />

@@ -4,7 +4,7 @@ import {useState} from "react"
 import {useShallow} from "zustand/react/shallow"
 
 import {useCardStore} from "@/stores/cards"
-import useUiStore from "@/stores/UiStore"
+import useUiStore from "@/stores/uiStore"
 
 import {motion, AnimatePresence} from "framer-motion"
 
@@ -42,8 +42,8 @@ import {
 
 const DropDownMenu = (props) => {
   const {id} = props
-  //    const deleteCard = useCardStore((s) => s.deleteCard);
-  //    const handleDeleteClick = () => deleteCard(id);
+  const deleteCard = useCardStore((s) => s.deleteCard)
+  const handleDeleteClick = () => deleteCard(id)
 
   return (
     <DropdownMenu>
@@ -55,55 +55,52 @@ const DropDownMenu = (props) => {
         align="end"
         className="bg-neutral-900  text-ms dark:text-white  mr-1 w-30"
       >
-        <DropdownMenuItem
-        // onPointerDown={handleDeleteClick}
-        >
+        <DropdownMenuItem onPointerDown={handleDeleteClick}>
           delete
         </DropdownMenuItem>
         <ManageTagsDialog id={id} />
-        {/* <ManageShortcutsDialog id={id} /> */}
+        <ManageShortcutsDialog id={id} />
       </DropdownMenuContent>
     </DropdownMenu>
   )
 }
 
-// export const SelectCheckbox = ({className, id, ...props}) => {
-//   // const { id } = props;
-//   const {uiCards, select, toggleSelectCard} = useUiStore(
-//     useShallow((s) => ({
-//       uiCards: s.uiCards,
-//       select: s.select,
-//       toggleSelectCard: s.toggleSelectCard,
-//     }))
-//   )
+export const SelectCheckbox = ({className, id, ...props}) => {
+  const {uiCards, select, toggleSelectCard} = useUiStore(
+    useShallow((s) => ({
+      uiCards: s.uiCards,
+      select: s.select,
+      toggleSelectCard: s.toggleSelectCard,
+    }))
+  )
 
-//   const handleSelect = (e) => {
-//     e.stopPropagation()
-//     toggleSelectCard(id)
-//   }
+  const handleSelect = (e) => {
+    e.stopPropagation()
+    toggleSelectCard(id)
+  }
 
-//   return (
-//     <AnimatePresence>
-//       {select && (
-//         <motion.span
-//           onPointerDownCapture={handleSelect}
-//           // className="self-end"
-//           className={className}
-//           initial={{opacity: 0}}
-//           animate={{opacity: 1}}
-//           exit={{opacity: 0}}
-//           transition={{duration: 0.2}}
-//         >
-//           {uiCards[id]?.selected ? (
-//             <CheckCircledIcon className="animate-in fade-in-50 duration-300 stroke-indigo-500" />
-//           ) : (
-//             <CircleIcon className="animate-in fade-in-50 duration-1000" />
-//           )}
-//         </motion.span>
-//       )}
-//     </AnimatePresence>
-//   )
-// }
+  return (
+    <AnimatePresence>
+      {select && (
+        <motion.span
+          onPointerDownCapture={handleSelect}
+          // className="self-end"
+          className={className}
+          initial={{opacity: 0}}
+          animate={{opacity: 1}}
+          exit={{opacity: 0}}
+          transition={{duration: 0.2}}
+        >
+          {uiCards[id]?.selected ? (
+            <CheckCircledIcon className="animate-in fade-in-50 duration-300 stroke-indigo-500" />
+          ) : (
+            <CircleIcon className="animate-in fade-in-50 duration-1000" />
+          )}
+        </motion.span>
+      )}
+    </AnimatePresence>
+  )
+}
 
 const Shortcut = (props) => {
   const {hotkey} = props
@@ -117,24 +114,22 @@ const Shortcut = (props) => {
 
 const FocusButton = (props) => {
   const {id, rndId} = props
-  //    const { focus, focused } = useCardStore(
-  //       useShallow((s) => ({
-  //          focus: s.focus,
-  //          focused: s.focused,
-  //       }))
-  //    );
-  //    const handleFocus = () => {
-  //       if (focused) {
-  //          focus(id, rndId);
-  //       } else {
-  //          focus(id, rndId);
-  //       }
-  //    };
+  // const {focus, focused} = useCardStore(
+  //   useShallow((s) => ({
+  //     focus: s.focus,
+  //     focused: s.focused,
+  //   }))
+  // )
+  const focus = useCardStore((s) => s.focus)
+  const focused = useCardStore((s) => s.focused)
+  const handleFocus = () => {
+    focus(id, rndId)
+  }
 
   return (
     <span
-      className="hover:cursor-pointer  top-0 right-10"
-      //  onPointerDown={handleFocus}
+      className="hover:cursor-pointer top-0 right-10"
+      onPointerDown={handleFocus}
     >
       <CaretSortIcon className="active:stroke-indigo-500 transition-colors duration-300" />
     </span>
@@ -143,7 +138,7 @@ const FocusButton = (props) => {
 
 const ManageShortcutsDialog = (props) => {
   const {id} = props
-  //    const addShortcut = useCardStore((state) => state.addShortcut);
+  const addShortcut = useCardStore((state) => state.addShortcut)
   const [value, setValue] = useState("")
   const [hotkeyPreview, setHotkeyPreview] = useState(
     "No hotkey for this card yet"
@@ -151,7 +146,7 @@ const ManageShortcutsDialog = (props) => {
 
   const handleValueChange = (e) => {
     setValue(e)
-    //   addShortcut(id, e);
+    addShortcut(id, e)
     if (value === "KeyQ") {
       setHotkeyPreview("ctrl + Q (ctrl + A if azerty)")
     } else if (value === "KeyW") {
@@ -214,7 +209,7 @@ export default function TopIcons(props) {
       <div className="absolute top-2 right-10 flex justify-start items-center gap-1 h-fit w-fit">
         <Shortcut hotkey={shortcut} />
         <FocusButton id={id} rndId={id + "-rnd"} />
-        {/* <SelectCheckbox id={id} className="" /> */}
+        <SelectCheckbox id={id} className="" />
         <DropDownMenu id={id} />
       </div>
     </>

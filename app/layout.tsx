@@ -1,10 +1,7 @@
 /** @format */
 
 import type {Metadata} from "next"
-
 import {ClerkProvider} from "@clerk/nextjs"
-
-import Nav from "@/components/Nav"
 
 import {ThemeProvider} from "@/components/theme-provider"
 import {Inter} from "next/font/google"
@@ -33,7 +30,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className="flex h-screen flex-col  gap-10 ">{children}</main>
+            <main className="flex h-screen flex-col  gap-10">{children}</main>
           </ThemeProvider>
         </body>
       </html>

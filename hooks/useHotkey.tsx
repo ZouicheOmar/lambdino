@@ -23,7 +23,8 @@ const useHotkey = () => {
       cards: s.cards,
     }))
   )
-  const {topLeft} = useUiStore()
+
+  const topLeft = useUiStore((s) => s.topLeft)
 
   const fitScreen = () => {
     if (!fitScreen) {
@@ -39,18 +40,13 @@ const useHotkey = () => {
       writeThisFile()
       return
     }
-    if (e.shiftKey && e.code === "KeyL") {
-      // e.preventDefault();
-      for (const card in cards) {
-        console.log(cards[card])
-      }
-    }
     if (e.ctrlKey && e.code === "KeyZ") {
       e.preventDefault()
       e.stopPropagation()
       fitScreen()
       return
     }
+
     if (e.ctrlKey && ["KeyW", "KeyQ", "KeyE"].includes(e.code)) {
       e.preventDefault()
       const cardsWithShortcuts = getCardsWithShortcuts()

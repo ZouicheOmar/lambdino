@@ -20,6 +20,7 @@ import {selectSlice} from "./slices/select"
 import {tagsSlice} from "./slices/tags"
 import {withShortcutSlice} from "./slices/withShortcuts"
 
+import {imageUrlSlice} from "./slices/imageUrlSlice"
 import {boardsSlice} from "./slices/boards"
 
 export const useCardStore = create(
@@ -41,5 +42,6 @@ export const useCardStore = create(
     ...selectSlice(set, get),
     ...withShortcutSlice(set, get),
     ...boardsSlice(set, get),
+    ...imageUrlSlice(set, get),
   }))
 )

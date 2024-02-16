@@ -5,7 +5,7 @@ import {create} from "zustand"
 import {immer} from "zustand/middleware/immer"
 import {animate} from "framer-motion"
 
-// import {useCardStore} from "./cards"
+import {useCardStore} from "./cards"
 
 import {AXIOS_CONFIG} from "@/lib/constants"
 const useUiStore = create(
@@ -20,6 +20,7 @@ const useUiStore = create(
     insertImageY: 0,
 
     uiCards: {},
+
     anySelected: 0,
     select: false,
     selectedFile: "",
@@ -32,6 +33,11 @@ const useUiStore = create(
     zoom: 1,
 
     fitScreen: false,
+
+    uiState: () => {
+      const uicards = get().uiCards
+      console.log("uicards", uicards)
+    },
 
     setTX: (value, element) => {
       set((state) => {
@@ -119,15 +125,25 @@ const useUiStore = create(
       }, 310)
     },
 
+    zoomToFit() {
+      const cards = useCardStore.getState().cards
+
+      for (let i = 0; i < Object.entries(cards).length; i++) {
+        // const id = Object.entries(cards)[i][0]
+        const card = Object.entries(cards)[i][1]
+        const {
+          position: {top, left},
+        } = card
+      }
+    },
+
     fitCanva: (ratio) => {
       set((state) => {
         state.fitScreen = true
         if (ratio <= 0.4) {
           state.zoom = 0.4
-          return
         }
         state.zoom = ratio
-        return
       })
     },
 
@@ -173,23 +189,18 @@ const useUiStore = create(
 
     logState: () => {
       const state = get().uiCards
-      console.log("files_list", state)
     },
 
     addUiCard: (card) => {
       set((state) => {
         state.uiCards = {...state.uiCards, ...card}
-        return
       })
     },
 
     deleteUiCard: (id) => {
-      console.log("uiCards before delete", get().uiCards)
       set((state) => {
         delete state.uiCards[id]
-        return
       })
-      console.log("uiCards after delete", get().uiCards)
     },
 
     initCards: () => {
@@ -199,16 +210,19 @@ const useUiStore = create(
       let emptyList = {}
 
       for (let i = 0; i < cards_array.length; i++) {
-        const id = cards_array[i][0]
+        const {type, id} = cards_array[i][1]
+        if (type === "image") {
+        }
+        // const id = cards_array[i][0]
         const {top, left} = cards_array[i][1].position
-        const {width, height} = cards_array[i][1].size
+        const {width, height} = cards_array[i][1]?.size
         const obj = {
           [id]: {
             selected: false,
             top: top,
             left: left,
-            width: width,
-            height: height,
+            width: width ?? 100,
+            height: height ?? 100,
           },
         }
 
@@ -239,7 +253,6 @@ const useUiStore = create(
 
       set((state) => {
         state.anySelected = n
-        return
       })
     },
 
@@ -247,13 +260,11 @@ const useUiStore = create(
       for (const id in get().uiCards) {
         set((state) => {
           state.uiCards[id].selected = true
-          return
         })
       }
 
       set((state) => {
         state.anySelected = get().uiCards.length
-        return
       })
     },
 
@@ -261,13 +272,11 @@ const useUiStore = create(
       for (const id in get().uiCards) {
         set((state) => {
           state.uiCards[id].selected = false
-          return
         })
       }
 
       set((state) => {
         state.anySelected = 0
-        return
       })
     },
 
@@ -277,10 +286,9 @@ const useUiStore = create(
         get().deselectAll()
         set((state) => {
           state.select = false
-          return
         })
       } else {
-        return set((state) => {
+        set((state) => {
           state.select = true
         })
       }
@@ -290,15 +298,12 @@ const useUiStore = create(
       get().deselectAll()
       set((state) => {
         state.select = false
-        return
       })
-      return
     },
 
     toggleInsertImageDialogOpen: (value) => {
       set((state) => {
         state.insertImageDialogOpen = value
-        return
       })
     },
   }))

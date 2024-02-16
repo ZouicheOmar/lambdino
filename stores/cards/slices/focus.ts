@@ -3,6 +3,8 @@
 import {animate} from "framer-motion"
 import {getRectById} from "@/utils/positions"
 
+import useUiStore from "@/stores/uiStore"
+
 export const focusSlice = (set, get) => ({
   focused: false,
 
@@ -13,11 +15,13 @@ export const focusSlice = (set, get) => ({
     const card = document.getElementById(id)
     const cardRnd = document.getElementById(rndId)
 
+    const cards = get().cards
+    console.log(cards)
+
     const {
       size: cardSize,
       position: cardPosition,
       type: cardType,
-      size,
     } = get().cards[id]
 
     const focused = get().focused
@@ -59,7 +63,6 @@ export const focusSlice = (set, get) => ({
 
       set((state) => {
         state.focused = false
-        return
       })
     } else {
       putOnTop(id)
@@ -150,7 +153,6 @@ export const focusSlice = (set, get) => ({
 
       set((state) => {
         state.focused = id
-        return
       })
     }
   },
@@ -179,6 +181,7 @@ export const focusSlice = (set, get) => ({
   },
 
   focusNext() {
+    //problem in arranged
     const arranged = get().arranged
     const ids = []
     for (let i = 0; i < arranged.length; i++) {

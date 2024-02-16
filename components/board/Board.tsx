@@ -7,11 +7,13 @@ import useUiStore from "@/stores/uiStore"
 
 import {motion} from "framer-motion"
 import {ContextMenu, ContextMenuTrigger} from "@radix-ui/react-context-menu"
+import ImageCard from "../cards/Image"
 
 import Note from "../cards/Note"
 import Markdown from "../cards/Markdown"
 import Code from "../cards/Code"
 import BoardMessage from "@/components/text/BoardMessage"
+import BoardContextMenu from "../contextMenus/BoardContextMenu"
 
 export default function Board() {
   const {zoom, setInsertImageX, setInsertImageY} = useUiStore(
@@ -22,6 +24,7 @@ export default function Board() {
     }))
   )
   const cards = useCardStore((s) => s.cards)
+  const url = useCardStore((s) => s.url)
 
   // useInitBoard()
 
@@ -50,7 +53,7 @@ export default function Board() {
       <ContextMenu>
         <ContextMenuTrigger
           id="boardWrapper"
-          className="w-full h-full relative p-0"
+          className="w-full h-full relative p-0 select-none"
         >
           <motion.div {...boardMotionDivProps}>
             <BoardMessage />
@@ -71,12 +74,12 @@ export default function Board() {
                     />
                   )
                 }
-                //else if (cards[item].type === "image") {
-                //   return <Image key={cards[item].id} id={cards[item].id} />
-                // }
+                if (cards[item].type === "image") {
+                  return <ImageCard key={cards[item].id} id={cards[item].id} />
+                }
               })}
           </motion.div>
-          {/* <BoardContextMenu /> */}
+          <BoardContextMenu />
         </ContextMenuTrigger>
       </ContextMenu>
     </>

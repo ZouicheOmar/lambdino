@@ -5,7 +5,9 @@ import {activateTextAreaById} from "@/utils/positions"
 export const activeSlice = (set, get) => ({
   activated: false,
   setActive(id) {
-    set((s) => (s.activated = id))
+    set((s) => {
+      s.activated = id
+    })
   },
   active(id) {
     get().getArrangedNotesAndCodes()
@@ -19,7 +21,9 @@ export const activeSlice = (set, get) => ({
       })
     } else {
       putOnTop(id)
-      set((s) => (s.activated = id))
+      set((s) => {
+        s.activated = id
+      })
     }
   },
 

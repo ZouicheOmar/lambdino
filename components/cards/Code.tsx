@@ -3,7 +3,7 @@ import {useEffect} from "react"
 
 import Editor from "react-simple-code-editor"
 
-// import { useCardStore } from "@/stores/cards";
+import {useCardStore} from "@/stores/cards"
 
 import RND from "./components/RND"
 import CardHeader from "./components/Header"
@@ -19,27 +19,28 @@ import {highlight, languages} from "prismjs"
 import "@/node_modules/prismjs/components/prism-clike"
 import "@/node_modules/prismjs/components/prism-javascript"
 import "@/node_modules/prismjs/components/prism-python"
-import "@/node_modules/prismjs/themes/prism.css"
+import "@/node_modules/prismjs/themes/prism-okaidia.css"
 
 const Body = (props) => {
   const {card} = props
   const {id, data} = card
   const {code} = data
-  //    const setData = useCardStore((state) => state.setData);
+  const setData = useCardStore((state) => state.setData)
 
   return (
     <Editor
       textareaId={`${id}-textarea`}
       value={code}
       onValueChange={(code) => setData(id, code)}
+      // highlight={(code) => highlight(code, languages.extend("javascript"))}
       highlight={(code) => highlight(code, languages.js)}
       padding={8}
       style={{
         fontFamily: '"Fira code", "Fira Mono", monospace',
         fontSize: 13,
       }}
-      //  onBlur={() => setData(id, code)}
-      className="grow nondrag h-full active:ring-indigo-500 focus:ring-bg-500/15  active:ring-[1px] transition-all"
+      onBlur={() => setData(id, code)}
+      className="grow nondrag h-full active:ring-indigo-500 focus:ring-indigo-500  active:ring-[1px] transition-all"
       textareaClassName="transition-colors  duration-300 active:bg-indigo-500/15   "
     />
   )
@@ -51,7 +52,7 @@ export default function Code(props) {
 
   return (
     <RND id={id}>
-      <div className="w-full h-full select-none border-[1px] border-neutral-700/50 flex flex-col fade-in slide-in-from-top-5 duration-300  bg-slate-950  rounded-[6px]">
+      <div className="w-full h-full select-none border flex flex-col fade-in slide-in-from-top-5 duration-300 bg-card rounded-md">
         <CardHeader
           id={id}
           title={title}

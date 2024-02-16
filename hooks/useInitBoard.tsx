@@ -1,26 +1,20 @@
 /** @format */
 import {useEffect} from "react"
+import {useAuth} from "@clerk/nextjs"
 
 import {useCardStore} from "@/stores/cards"
-import useUiStore from "@/stores/uiStore"
+import {useUserStore} from "@/stores/user"
 
 export default function useInitBoard() {
-  const writeThisFile = useCardStore((s) => s.writeThisFile)
-  const fileName = useCardStore((s) => s.fileName)
-  const initCards = useUiStore((s) => s.initCards)
+  const setBoardsList = useCardStore((s) => s.setBoardsList)
 
-  const handleBeforeUnload = () => {
-    setTimeout(() => {
-      writeThisFile(false)
-      localStorage.setItem("last_file", fileName)
-    }, 0)
-  }
+  const setUserId = useUserStore((s) => s.setUserId)
+  const {userId: clerkUserId} = useAuth()
 
   useEffect(() => {
-    initCards()
-    window.addEventListener("beforeunload", handleBeforeUnload)
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload)
+    if (clerkUserId) {
+      setUserId(clerkUserId)
+      setBoardsList(clerkUserId)
     }
-  }, [fileName])
+  }, [clerkUserId])
 }

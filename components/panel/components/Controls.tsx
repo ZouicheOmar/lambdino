@@ -17,6 +17,7 @@ import {
   CrumpledPaperIcon,
 } from "@radix-ui/react-icons"
 import {FitScreenIcon} from "@/components/Icons"
+import {getRectById} from "@/utils/positions"
 
 export default function Controls() {
   const {
@@ -31,6 +32,7 @@ export default function Controls() {
     foldSelected,
     toggleGroupMode,
     getCanvaSize,
+    logState,
   } = useCardStore(
     useShallow((s) => ({
       deleteSelected: s.deleteSelected,
@@ -44,6 +46,7 @@ export default function Controls() {
       foldSelected: s.foldSelected,
       toggleGroupMode: s.toggleGroupMode,
       getCanvaSize: s.getCanvaSize,
+      logState: s.logState,
     }))
   )
 
@@ -56,6 +59,8 @@ export default function Controls() {
     center,
     fitScreen,
     topLeft,
+    zoomToFit,
+    uiState,
   } = useUiStore(
     useShallow((s) => ({
       toggleSelect: s.toggleSelect,
@@ -66,14 +71,16 @@ export default function Controls() {
       center: s.center,
       fitScreen: s.fitScreen,
       topLeft: s.topLeft,
+      zoomToFit: s.zoomToFit,
+      uiState: s.uiState,
     }))
   )
 
   const updatePositions = usePositions()
 
   const handleSave = () => {
-    updatePositions()
-    // writeThisFile(fileName)
+    // updatePositions()
+    writeThisFile()
   }
 
   const focusOff = () => {
@@ -90,13 +97,21 @@ export default function Controls() {
     setTimeout(() => center(), 500)
   }
 
+  const handleZoomToFit = () => {
+    zoomToFit()
+  }
+
   if (fileName) {
     return (
       <>
-        <Button onPointerDown={organize} id="organize_button">
-          organize
+        <Button onPointerDown={uiState}>
+          cards state
           <LayersIcon className="ml-2 h-4 w-4" />
         </Button>
+        {/* <Button onPointerDown={organize} id="organize_button">
+          organize
+          <LayersIcon className="ml-2 h-4 w-4" />
+        </Button> */}
         <Button
           id="originButton"
           onPointerDown={topLeft}
@@ -107,8 +122,7 @@ export default function Controls() {
         </Button>
         <Button
           id="FitButton"
-          disabled
-          onPointerDown={handleCenter}
+          onPointerDown={handleZoomToFit}
           className="animate-in fade-in slide-in-from-left-5 duration-100"
         >
           fit
@@ -174,7 +188,7 @@ export default function Controls() {
             </Button>
           </>
         )}
-        {focused && (
+        {/* {focused && (
           <span className="w-full flex justify-around">
             <Button variant="outline" size="icon" OnPointerDown={focusPrevious}>
               <ChevronDownIcon className="rotate-90" />
@@ -186,7 +200,7 @@ export default function Controls() {
               <ChevronDownIcon className="-rotate-90" />
             </Button>
           </span>
-        )}
+        )} */}
       </>
     )
   }
