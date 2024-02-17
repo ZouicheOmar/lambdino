@@ -21,7 +21,7 @@ export default function Page() {
 
   return (
     <div
-      className="fixed w-full h-full top-0 left-0 m-0 pl-[11rem] pt-[2rem] box-border flex"
+      className="fixed w-full h-full bg-zinc-800 top-0 left-0 m-0 pl-[11rem] pt-[2rem] box-border flex"
       onWheel={handleWheel}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}

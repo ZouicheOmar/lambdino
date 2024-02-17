@@ -1,8 +1,8 @@
 /** @format */
 
 import axios from "axios"
-import {getData} from "../utils/call-lamba"
-import {LAMBDA} from "../lib/constants"
+import {getData} from "../../utils/call-lamba"
+import {LAMBDA} from "../../lib/constants"
 
 //THIS IS WHERE I LOAD THE BOARDS AND THE CARDS ETC...
 //IT'S LITERRALY LIKE COMBINING THE SERVER AND THE CLIENT SIDE

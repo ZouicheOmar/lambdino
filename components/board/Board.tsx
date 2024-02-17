@@ -2,6 +2,8 @@
 import {useEffect} from "react"
 import {useShallow} from "zustand/react/shallow"
 
+import {Tweet} from "react-tweet"
+
 import {useCardStore} from "@/stores/cards"
 import useUiStore from "@/stores/uiStore"
 
@@ -14,6 +16,7 @@ import Markdown from "../cards/Markdown"
 import Code from "../cards/Code"
 import BoardMessage from "@/components/text/BoardMessage"
 import BoardContextMenu from "../contextMenus/BoardContextMenu"
+import Url from "../cards/Url"
 
 export default function Board() {
   const {zoom, setInsertImageX, setInsertImageY} = useUiStore(
@@ -77,8 +80,14 @@ export default function Board() {
                 if (cards[item].type === "image") {
                   return <ImageCard key={cards[item].id} id={cards[item].id} />
                 }
+                if (cards[item].type === "url") {
+                  return <Url key={cards[item].id} id={cards[item].id} />
+                }
               })}
           </motion.div>
+          {/* <motion.div drag>
+            <Tweet id="1758296631345139939"/>
+          </motion.div> */}
           <BoardContextMenu />
         </ContextMenuTrigger>
       </ContextMenu>

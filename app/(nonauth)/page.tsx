@@ -1,6 +1,19 @@
 /** @format */
 
+import axios from "axios"
+
 export default async function Home() {
+  // axios
+  //   .get("http://localhost:3000/api/handleUrl")
+  //   .then((res) => {
+  //     console.clear()
+  //     console.log(Object.keys(res.data))
+  //     console.log(res.data.favicons)
+  //   })
+  //   .catch((err) => {
+  //     console.log("err", err.message)
+  //   })
+
   return (
     <div className="z-10 max-w-5xl w-full flex flex-col gap-6 text-sm lg:flex">
       <div className="w-full flex flex-col gap-6">

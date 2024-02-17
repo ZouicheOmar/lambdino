@@ -6,7 +6,7 @@ import {cva} from "class-variance-authority"
 import {cn} from "@/lib/cn"
 
 const variants = cva(
-  "w-full flex justify-between flex-none border-none [&>input]:border-none [&>input]:bg-inherit [&>input:focus]:ring-[1px] [&>input]:transition-colors [&>input]:duration-300 [&>input]:overflow-scroll [&>input]:resize-none [&>input:focus]:outline-none [&>input]:select-none",
+  "w-full flex justify-between flex-none border-none [&>input]:border-none [&>input]:rounded [&>input]:bg-inherit [&>input:focus]:ring-[1px] [&>input]:transition-colors [&>input]:duration-300 [&>input]:overflow-scroll [&>input]:resize-none [&>input:focus]:outline-none [&>input]:select-none",
   {
     variants: {
       variant: {

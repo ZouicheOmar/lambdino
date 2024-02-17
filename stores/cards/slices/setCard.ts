@@ -11,11 +11,11 @@ export const setCardSlice = (set, get) => ({
       set((state) => {
         state.cards[id].data.code = data
       })
-    }
-    // else if (card.type === "url") {
-    //    //make url update here
-    // }
-    else {
+    } else if (card.type === "url") {
+      set((state) => {
+        state.cards[id] = {...state.cards[id], ...data}
+      })
+    } else {
       console.log("this card has note type or id not found")
     }
   },

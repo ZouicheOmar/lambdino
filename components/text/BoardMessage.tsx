@@ -47,7 +47,7 @@ export default function BoardMessage() {
           </p>
           {fileName === "" && (
             <p
-              className="mt-10 brightness-[0.25] cousine-font text-sm text-start w-fit rounded hover:bg-neutral-700 p-2 cursor-pointer"
+              className="mt-10 brightness-[0.50] cousine-font text-sm text-start w-fit rounded hover:bg-neutral-500 transition-colors duration-200 p-2 cursor-pointer"
               onPointerDown={openDrawer}
             >
               {" "}

@@ -78,6 +78,7 @@ export const cardsSlice = (set, get) => ({
 
     let size = {width: 300, height: 200}
     let data = ""
+    let urlCard
 
     if (type === "url") {
       console.log("none")
@@ -92,6 +93,17 @@ export const cardsSlice = (set, get) => ({
       size = {width: 250, height: 350}
       data = "### Hi ! Double tap to edit"
     }
+    if (type === "url") {
+      console.log("trying to add a url card, ")
+      size = {width: 326, height: 40}
+      data = "url"
+      urlCard = {
+        description: "",
+        favicon: "",
+        href: "",
+        already_added: false,
+      }
+    }
 
     const baseCard = {
       [id]: {
@@ -104,6 +116,7 @@ export const cardsSlice = (set, get) => ({
         data: data,
         folded: false,
         tags: [],
+        ...urlCard,
       },
     }
 
