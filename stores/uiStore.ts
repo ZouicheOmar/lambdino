@@ -101,6 +101,7 @@ const useUiStore = create(
 
     setMx: (value) => set(() => ({mx: value})),
     setMy: (value) => set(() => ({my: value})),
+
     setInsertImageX: (value) => set(() => ({insertImageX: value})),
     setInsertImageY: (value) => set(() => ({insertImageY: value})),
 

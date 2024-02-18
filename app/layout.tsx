@@ -1,7 +1,7 @@
 /** @format */
 
 import type {Metadata} from "next"
-import {ClerkProvider} from "@clerk/nextjs"
+import {ClerkProvider, currentUser} from "@clerk/nextjs"
 
 import {ThemeProvider} from "@/components/theme-provider"
 import {Inter} from "next/font/google"
@@ -15,11 +15,15 @@ export const metadata: Metadata = {
     "An app to test aws lambda functions and integrate them in a Nextjs app",
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
+  board,
+  home,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const user = await currentUser()
+
   return (
     <ClerkProvider>
       <html lang="en">
@@ -30,7 +34,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className="flex h-screen flex-col  gap-10">{children}</main>
+            <main className="flex h-screen flex-col  gap-10">
+              {user ? board : home}
+            </main>
           </ThemeProvider>
         </body>
       </html>

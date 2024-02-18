@@ -2,8 +2,6 @@
 import {useEffect} from "react"
 import {useShallow} from "zustand/react/shallow"
 
-import {Tweet} from "react-tweet"
-
 import {useCardStore} from "@/stores/cards"
 import useUiStore from "@/stores/uiStore"
 
@@ -64,11 +62,9 @@ export default function Board() {
               Object.keys(cards).map((item) => {
                 if (cards[item].type === "note") {
                   return <Note key={cards[item].id} data={cards[item]} />
-                }
-                if (cards[item].type === "code") {
+                } else if (cards[item].type === "code") {
                   return <Code key={cards[item].id} data={cards[item]} />
-                }
-                if (cards[item].type === "markdown") {
+                } else if (cards[item].type === "markdown") {
                   return (
                     <Markdown
                       key={cards[item].id}
@@ -76,11 +72,9 @@ export default function Board() {
                       id={cards[item].id}
                     />
                   )
-                }
-                if (cards[item].type === "image") {
+                } else if (cards[item].type === "image") {
                   return <ImageCard key={cards[item].id} id={cards[item].id} />
-                }
-                if (cards[item].type === "url") {
+                } else if (cards[item].type === "url") {
                   return <Url key={cards[item].id} id={cards[item].id} />
                 }
               })}

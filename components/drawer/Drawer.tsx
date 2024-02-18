@@ -1,6 +1,7 @@
 /** @format */
 
 import {useState, useEffect} from "react"
+import {useAuth} from "@clerk/nextjs"
 // import {useShallow} from "zustand/react/shallow"
 
 import {useCardStore} from "@/stores/cards"
@@ -282,9 +283,15 @@ const BodyLeft = () => {
 }
 
 const BodyRight = () => {
+  const {signOut} = useAuth()
+  const handleSignOut = () => {}
+
   return (
     <div className="w-full md:w-3/5 md:h-full ">
       <div className="w-full h-full flex flex-col gap-6 dark:text-neutral-300/80 bg-slate-900/75  ring-slate-800/75 ring-[1px] rounded-[8px] p-3 ">
+        <div className="w-full flex justify-end">
+          <Button onPointerDown={signOut}>Sign out</Button>
+        </div>
         <p>
           This is mess board, add basic text cards, markdown cards, some code
           snippets and images.

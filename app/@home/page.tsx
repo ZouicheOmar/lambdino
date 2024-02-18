@@ -1,6 +1,6 @@
 /** @format */
 
-import axios from "axios"
+//if (auth) { <Board />} else <HomePage />
 
 export default async function Home() {
   // axios

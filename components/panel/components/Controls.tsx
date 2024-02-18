@@ -104,7 +104,7 @@ export default function Controls() {
   if (fileName) {
     return (
       <>
-        <Button onPointerDown={uiState}>
+        <Button onPointerDown={logState}>
           cards state
           <LayersIcon className="ml-2 h-4 w-4" />
         </Button>

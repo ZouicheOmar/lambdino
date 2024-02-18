@@ -1,7 +1,6 @@
 /** @format */
 import {useEffect} from "react"
 import {useAuth} from "@clerk/nextjs"
-import axios from "axios"
 
 import {useCardStore} from "@/stores/cards"
 import {useUserStore} from "@/stores/user"

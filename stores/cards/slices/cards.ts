@@ -78,7 +78,7 @@ export const cardsSlice = (set, get) => ({
 
     let size = {width: 300, height: 200}
     let data = ""
-    let urlCard
+    let urlCard = {}
 
     if (type === "url") {
       console.log("none")
