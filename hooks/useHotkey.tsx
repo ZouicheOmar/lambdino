@@ -64,6 +64,10 @@ const useHotkey = () => {
       const button = document.getElementById("drawerMenu")
       button?.click()
     }
+    if (e.ctrlKey && e.code === "KeyO") {
+      e.preventDefault()
+      topLeft()
+    }
     // if (e.ctrlKey && e.code === "KeyJ") {
     //    e.preventDefault();
     //    e.stopPropagation();
@@ -73,11 +77,6 @@ const useHotkey = () => {
     //    e.preventDefault();
     //    e.stopPropagation();
     //    activePrevious();
-    // }
-
-    // if (e.ctrlKey && e.code === "KeyO") {
-    //    e.preventDefault();
-    //    topLeft();
     // }
   }, [])
 

@@ -10,9 +10,9 @@ import "./globals.css"
 const inter = Inter({subsets: ["greek"]})
 
 export const metadata: Metadata = {
-  title: "Lambda",
+  title: "Mess Board",
   description:
-    "An app to test aws lambda functions and integrate them in a Nextjs app",
+    "Mess Board is is digital canvas for your notes, images and code snippets. Create cards filled with text, code snippets, markdown, images, and URLs, scattered freely across the board. Drag and drop them to arrange",
 }
 
 export default async function RootLayout({
@@ -34,7 +34,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className="flex h-screen flex-col  gap-10">
+            <main className="flex min-h-screen min-w-screen flex-col gap-10">
               {user ? board : home}
             </main>
           </ThemeProvider>

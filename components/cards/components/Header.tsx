@@ -58,7 +58,6 @@ export default function Header(props) {
         onKeyDown={handleKeyDown}
         onChange={handleTitleChange}
         placeholder={title || "title"}
-        // onBlur={//NOOOOOOOOO number of write will be crazyy() => writeThisFile(false)}
       />
     </div>
   )

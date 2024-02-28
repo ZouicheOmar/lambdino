@@ -28,7 +28,7 @@ export default function Url(props) {
       // onPointerDown={putOnTop}
     >
       {!valid ? (
-        <div className="relative w-[300px] h-fit bg-card rounded-md pr-2  border animate-in fade-in-30 animate-out fade-out-30">
+        <div className="relative w-[350px] h-fit bg-card rounded-md pr-2  border animate-in fade-in-30 animate-out fade-out-30">
           <form
             onSubmit={handleSubmit}
             onInvalid={handleInvalid}

@@ -31,32 +31,10 @@ import {
 } from "@radix-ui/react-icons"
 import {Toaster, toast} from "sonner"
 import {useUserStore} from "@/stores/user"
+import {Input} from "../ui/input"
+import {Badge} from "../ui/badge"
 
 const FilesList = () => {
-  /**
-     * 
-  const getCards = useCardStore((s) => s.getCards)
-  const {files_list, getFiles, selectModeOff} = useUiStore(
-    useShallow((s) => ({
-      files_list: s.files_list,
-      getFiles: s.getFiles,
-      selectModeOff: s.selectModeOff,
-    }))
-  )
-
-  useEffect(() => {
-    getFiles()
-  }, [])
-
-  
-
-  const handlePointerDown = (e) => {
-    e.target.dataset.active = e.target.dataset.active === "on" ? "off" : "on"
-    console.log("toggle select mode")
-  }
-
-     */
-
   const getCards = useCardStore((s) => s.getCards)
   const selectModeOff = useUiStore((s) => s.selectModeOff)
   const topLeft = useUiStore((s) => s.topLeft)
@@ -72,46 +50,14 @@ const FilesList = () => {
   useEffect(() => {}, [])
 
   return (
-    // <TabsContent value="files">
-    //   <div className="flex flex-col gap-3 ">
-    //     {files_list.length !== 0 && (
-    //       <div className="w-full  text-base items-center flex justify-end px-1">
-    //         <CheckCircledIcon
-    //           data-active="off"
-    //           onPointerDown={handlePointerDown}
-    //           className="scale-110 data-[active=on]:text-indigo-500  transition-colors duration-300 cursor-pointer"
-    //         />
-    //       </div>
-    //     )}
-    //     <ul className="list-disc w-full list-inside ">
-    //       {" "}
-    //       {files_list.length !== 0 ? (
-    //         files_list.map((item, index) => (
-    //           <li
-    //             className="hover:bg-neutral-800 rounded cursor-pointer transition-colors h-[1.5rem] px-2 flex items-center justify-between"
-    //             key={index}
-    //             onClick={(e) => handleSelectItem(e, item)}
-    //           >
-    //             <span className="flex items-center gap-1">
-    //               <FileIcon />
-    //               {item}
-    //             </span>
-    //             <Cross2Icon className="h-full self-end	 hover:bg-red-900 transition-colors rounded-sm hover:text-red-500 hover:cursor-pointer" />
-    //           </li>
-    //         ))
-    //       ) : (
-    //         <span>No files, please create a file</span>
-    //       )}
-    //     </ul>
-    //   </div>
-    // </TabsContent>
     <TabsContent value="files">
       <div className="flex flex-col gap-3 ">
         <ul className="list-disc w-full list-inside ">
           {boards.length ? (
             boards.map((item, index) => (
               <li
-                className="hover:bg-neutral-800 rounded cursor-pointer transition-colors h-[1.5rem] px-2 flex items-center justify-between"
+                // className="hover:bg-accent rounded cursor-pointer transition-colors h-[1.5rem] px-2 flex items-center justify-between"
+                className="hover:bg-accent rounded cursor-pointer transition-colors px-2 py-1 flex items-center justify-between"
                 key={index}
                 onClick={(e) => handleSelectItem(e, item)}
               >
@@ -119,7 +65,9 @@ const FilesList = () => {
                   <FileIcon />
                   {item}
                 </span>
-                <Cross2Icon className="h-full self-end	 hover:bg-red-900 transition-colors rounded-sm hover:text-red-500 hover:cursor-pointer" />
+                {/* <Button variant="outline" size="icon">
+                  <Cross2Icon className="h-4 w-4" />
+                </Button> */}
               </li>
             ))
           ) : (
@@ -195,10 +143,7 @@ const ImageList = () => {
 
 const BodyFiles = () => {
   return (
-    <Tabs
-      defaultValue="files"
-      className="relative grow w-full p-1 bg-slate-900/75 ring-[1px] ring-slate-800/75 rounded-[8px]"
-    >
+    <Tabs defaultValue="files" className="relative grow p-1 border rounded-lg">
       <TabsList className="w-full bg-transparent">
         <TabsTrigger
           value="files"
@@ -244,25 +189,19 @@ const BodyCreateNewFile = () => {
   }
 
   return (
-    <div className="w-full p-3 gap-2 ring-[1px] bg-slate-900/75  ring-slate-800/75 rounded-[8px]">
+    <div className="w-full p-3 gap-2 border rounded-lg">
       <span>Add a new board</span>
       <form
-        className="w-full flex flex-col md:flex-row py-1 justify-start  gap-2 "
+        className="w-full flex md:flex-col py-1 justify-start  gap-2 "
         onSubmit={handlecreateFile}
       >
-        <input
+        <Input
           type="text"
-          placeholder="name"
+          placeholder="my new board"
           value={value}
-          className="bg-neutral-950 grow px-2 py-1 ring-neutral-800 ring-[1px] rounded-[6px]"
           onChange={handleChange}
         />
-        <Button
-          className="w-full md:w-1/3 ring-[1px] outline-none bg-neutral-950 ring-neutral-800"
-          type="submit"
-        >
-          add
-        </Button>
+        <Button type="submit">add</Button>
       </form>
       {errorMessage && (
         <p className="mt-1 animate-in fade-in-10 duration-500 bg-destructive/35 border rounded border-destructive text-destructive-foreground p-1 text-sm">
@@ -283,29 +222,50 @@ const BodyLeft = () => {
 }
 
 const BodyRight = () => {
-  const {signOut} = useAuth()
-  const handleSignOut = () => {}
-
   return (
     <div className="w-full md:w-3/5 md:h-full ">
-      <div className="w-full h-full flex flex-col gap-6 dark:text-neutral-300/80 bg-slate-900/75  ring-slate-800/75 ring-[1px] rounded-[8px] p-3 ">
-        <div className="w-full flex justify-end">
-          <Button onPointerDown={signOut}>Sign out</Button>
-        </div>
-        <p>
+      <div className="w-full h-full flex flex-col gap-6 p-3 border rounded-lg">
+        {/* <p>
           This is mess board, add basic text cards, markdown cards, some code
           snippets and images.
           <br />
-        </p>
-        <div className="cousine-font ">
-          <p className="underline underline-offset-2">Controls </p>
+        </p> */}
+        <div>
+          <p> ⌨ Controls </p>
           <ul className="pl-2">
-            <li> ctrl + Q or W or E : focus on card with a shortcut</li>
-            <li> ctrl + J or K : toggle focus between cards</li>
-            <li> ctrl + Z : fit screen</li>
-            <li> ctrl + S : save board</li>
-            <li> ctrl + G : open / close drawer</li>
-            <li> ctrl + O : go to board's top-left corner</li>
+            <li>
+              <Badge variant="shortcut">ctrl</Badge>+
+              <Badge variant="shortcut">Q</Badge>
+              or W or E : focus on card with a shortcut
+            </li>
+            {/* <li>
+              {" "}
+              <Badge variant="shortcut">ctrl</Badge>+
+              <Badge variant="shortcut">J</Badge> or{" "}
+              <Badge variant="shortcut">K</Badge> : toggle focus between cards
+            </li> 
+            <li>
+              {" "}
+              <Badge variant="shortcut">ctrl</Badge>+
+              <Badge variant="shortcut">Z</Badge> : fit screen
+            </li>
+            */}
+            <li>
+              {" "}
+              <Badge variant="shortcut">ctrl</Badge>+
+              <Badge variant="shortcut">S</Badge> : save board
+            </li>
+            <li>
+              {" "}
+              <Badge variant="shortcut">ctrl</Badge>+
+              <Badge variant="shortcut">G</Badge> : open / close drawer
+            </li>
+            <li>
+              {" "}
+              <Badge variant="shortcut">ctrl</Badge>+
+              <Badge variant="shortcut">O</Badge> : go to board's top-left
+              corner
+            </li>
           </ul>
         </div>
       </div>
@@ -349,7 +309,7 @@ const BodyFooter = () => {
   return (
     <DrawerFooter className="flex-none h-fit mb-0">
       <p className="w-full text-sm text-center text-neutral-700">
-        Built by @Razal, free of license,
+        Built by @Razal,{" "}
         <a href="https://www.ozdocs.fr/" target="_blank">
           ozdocs.com
         </a>
@@ -362,7 +322,7 @@ const Body = () => {
   return (
     <>
       <DrawerContent
-        className="text-sm border-none ring-none outline-none h-full "
+        className="text-sm border-none  ring-none outline-none h-full "
         onPointerDown={() => console.log("clicked on drawer body")}
       >
         <BodyHeader />

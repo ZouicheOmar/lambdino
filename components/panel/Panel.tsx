@@ -2,6 +2,7 @@
 
 import Drawer from "../drawer/Drawer"
 import Controls from "./components/Controls"
+import LogOutButton from "./components/LogOutButton"
 
 const Panel = () => {
   return (
@@ -12,6 +13,7 @@ const Panel = () => {
       <div className="w-full h-fit  p-0 bg-neutral-900/70 flex flex-col gap-2 py-[4px] px-[4px] rounded">
         <Drawer />
         <Controls />
+        <LogOutButton />
       </div>
     </div>
   )

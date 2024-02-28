@@ -8,7 +8,7 @@ export default function Layout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="w-full h-full p-24 ">
+    <div className="w-full h-full p-10 lg:p-24 pb-0">
       <Nav />
       {children}
     </div>

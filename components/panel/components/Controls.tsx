@@ -104,11 +104,11 @@ export default function Controls() {
   if (fileName) {
     return (
       <>
-        <Button onPointerDown={logState}>
+        {/* <Button onPointerDown={logState}>
           cards state
           <LayersIcon className="ml-2 h-4 w-4" />
         </Button>
-        {/* <Button onPointerDown={organize} id="organize_button">
+        <Button onPointerDown={organize} id="organize_button">
           organize
           <LayersIcon className="ml-2 h-4 w-4" />
         </Button> */}
