@@ -5,7 +5,7 @@ import Image from "next/image"
 export default function Hero() {
   return (
     <>
-      <div className="w-full flex flex-col items-center gap-10 h-[30rem]">
+      <div className="w-full flex flex-col items-center gap-10">
         <Image
           className="relative dark:drop-shadow-[0.5rem_0_0.5rem_#64748b75] light:invert"
           src="/logo.svg"

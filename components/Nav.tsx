@@ -5,6 +5,8 @@ import Link from "next/link"
 import {usePathname} from "next/navigation"
 import {useEffect} from "react"
 import Image from "next/image"
+import {HamburgerMenuIcon} from "@radix-ui/react-icons"
+import SideNav from "./SideNav"
 
 type NavLinkProps = {
   href: string
@@ -45,12 +47,9 @@ export default function Nav() {
 
   return (
     <div className="w-full flex justify-between ">
-      {/* <Link href="/" className="text-xl">
-        {" "}
-        Lambdino
-      </Link> */}
       <HomeButton />
-      <div className="w-fit flex  gap-6 text-sm">
+      <SideNav />
+      <div className="hidden md:flex w-fit  gap-6 text-sm">
         <NavLink href="/about" text="about" />
         {!user && (
           <>
