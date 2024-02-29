@@ -34,7 +34,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className="flex min-h-screen min-w-screen flex-col gap-10">
+            <main className="flex min-h-screen min-w-screen flex-col ">
               {user ? board : home}
             </main>
           </ThemeProvider>
