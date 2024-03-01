@@ -22,7 +22,6 @@ export default function HomePage() {
           </Button>
         </div>
       </Layout>
-      <Footer />
     </>
   )
 }
