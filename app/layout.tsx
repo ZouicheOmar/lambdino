@@ -6,6 +6,7 @@ import {ClerkProvider, currentUser} from "@clerk/nextjs"
 import {ThemeProvider} from "@/components/theme-provider"
 import {Inter} from "next/font/google"
 import "./globals.css"
+import React from "react"
 
 const inter = Inter({subsets: ["greek"]})
 
@@ -21,6 +22,8 @@ export default async function RootLayout({
   home,
 }: Readonly<{
   children: React.ReactNode
+  board: React.ReactNode
+  home: React.ReactNode
 }>) {
   const user = await currentUser()
 

@@ -5,8 +5,9 @@ import useHotkey from "@/hooks/useHotkey"
 import useZoom from "@/hooks/useZoom"
 import useScroll from "@/hooks/useScroll"
 import usePointer from "@/hooks/usePointer"
+import React from "react"
 
-export default function Main({children}) {
+export default function Main({children}: {children: React.ReactNode}) {
   useHotkey()
   const handleWheel = useScroll()
   const {handlePointerDown, handlePointerMove} = usePointer()

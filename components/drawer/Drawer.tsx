@@ -263,8 +263,7 @@ const BodyRight = () => {
             <li>
               {" "}
               <Badge variant="shortcut">ctrl</Badge>+
-              <Badge variant="shortcut">O</Badge> : go to board's top-left
-              corner
+              <Badge variant="shortcut">O</Badge> : go to boards top-left corner
             </li>
           </ul>
         </div>

@@ -1,6 +1,6 @@
 /** @format */
 
-export const DragIcon = ({className}) => {
+export const DragIcon = ({className}: {className: string}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,7 +15,7 @@ export const DragIcon = ({className}) => {
   )
 }
 
-export const FocusIcon = ({className}) => {
+export const FocusIcon = ({className}: {className: string}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +29,7 @@ export const FocusIcon = ({className}) => {
   )
 }
 
-export const ResizeIcon = ({className}) => {
+export const ResizeIcon = ({className}: {className: string}) => {
   return (
     <svg
       height="18"
@@ -46,7 +46,7 @@ export const ResizeIcon = ({className}) => {
   )
 }
 
-export const ChevronIcon = ({className}) => {
+export const ChevronIcon = ({className}: {className: string}) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ export const ChevronIcon = ({className}) => {
   )
 }
 
-export const RightArrowIcon = ({className}) => {
+export const RightArrowIcon = ({className}: {className: string}) => {
   return (
     <svg
       width="15"
@@ -80,7 +80,7 @@ export const RightArrowIcon = ({className}) => {
   )
 }
 
-export const FitScreenIcon = ({className}) => (
+export const FitScreenIcon = ({className}: {className: string}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     height="24"

@@ -7,7 +7,7 @@ export default function Page() {
     <>
       <div className="md:p-10 mt-[5rem] max-w-5xl mb-[10rem] flex mx-auto flex-col gap-4">
         <div className="bg-secondary/45  p-2 rounded">
-          <p className="text-lg font-semibold">What's Mess Board</p>
+          <p className="text-lg font-semibold">What is Mess Board</p>
           <p className="text-pretty">
             Mess board is a tool to save whatever text, code snippets, images,
             urls you want to store, without the burden of keeping tidy organized
