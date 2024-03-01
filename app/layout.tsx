@@ -36,6 +36,7 @@ export default async function RootLayout({
           >
             <main className="flex min-h-screen min-w-screen flex-col ">
               {user ? board : home}
+              {/* {board} */}
             </main>
           </ThemeProvider>
         </body>

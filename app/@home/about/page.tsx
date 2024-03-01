@@ -17,12 +17,12 @@ export default function Page() {
         <div className="bg-secondary/45 p-2 rounded">
           <p className="text-lg font-semibold">How to use</p>
           <p className="text-pretty">
-            Simply create a board, and put whatever you want on it, arrange it
+            Simply create a board and put whatever you want on it, arrange it
             freely
           </p>
         </div>
         <div className="bg-secondary/45  p-2 rounded">
-          <p className="text-lg font-semibold">Supported content</p>
+          <p className="text-lg font-semibold">Supported data types</p>
           <ul className="list-disc list-inside">
             <li>text</li>
             <li>code</li>

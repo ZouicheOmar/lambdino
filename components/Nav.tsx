@@ -3,9 +3,7 @@
 import {UserButton, useUser} from "@clerk/nextjs"
 import Link from "next/link"
 import {usePathname} from "next/navigation"
-import {useEffect} from "react"
 import Image from "next/image"
-import {HamburgerMenuIcon} from "@radix-ui/react-icons"
 import SideNav from "./SideNav"
 
 type NavLinkProps = {
@@ -41,16 +39,12 @@ export default function Nav() {
   const {isLoaded, isSignedIn, user} = useUser()
   const pathname = usePathname()
 
-  useEffect(() => {
-    console.log("pathname ", pathname)
-  }, [])
-
   return (
     <div className="w-full flex justify-between ">
       <HomeButton />
       <SideNav />
       <div className="hidden md:flex w-fit  gap-6 text-sm">
-        <NavLink href="/about" text="about" />
+        <NavLink href="/about" text="About" />
         {!user && (
           <>
             <NavLink href="/sign-in" text="Sign In" />

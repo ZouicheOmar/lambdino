@@ -233,12 +233,12 @@ const BodyRight = () => {
         <div>
           <p> ⌨ Controls </p>
           <ul className="pl-2">
-            <li>
+            {/* <li>
               <Badge variant="shortcut">ctrl</Badge>+
               <Badge variant="shortcut">Q</Badge>
               or W or E : focus on card with a shortcut
             </li>
-            {/* <li>
+            <li>
               {" "}
               <Badge variant="shortcut">ctrl</Badge>+
               <Badge variant="shortcut">J</Badge> or{" "}

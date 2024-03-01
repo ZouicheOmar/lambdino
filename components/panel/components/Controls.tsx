@@ -104,10 +104,7 @@ export default function Controls() {
   if (fileName) {
     return (
       <>
-        {/* <Button onPointerDown={logState}>
-          cards state
-          <LayersIcon className="ml-2 h-4 w-4" />
-        </Button>
+        {/*
         <Button onPointerDown={organize} id="organize_button">
           organize
           <LayersIcon className="ml-2 h-4 w-4" />
@@ -120,14 +117,14 @@ export default function Controls() {
           origin
           <CornerTopLeftIcon className="fill-white duration-300 ml-2  h-4 w-4" />
         </Button>
-        <Button
+        {/* <Button
           id="FitButton"
           onPointerDown={handleZoomToFit}
           className="animate-in fade-in slide-in-from-left-5 duration-100"
         >
           fit
           <FitScreenIcon className="fill-white duration-300 ml-2  h-4 w-4" />
-        </Button>
+        </Button> */}
         <Button
           onPointerDown={handleSave}
           id="saveButton"
