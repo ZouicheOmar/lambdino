@@ -62,9 +62,7 @@ export default function Illustrations() {
       </div>
       <div className="grid grid-cols-1 gap-6 place-items-center  w-fit">
         <div className="flex flex-col gap-2 bg-slate-600 p-2 w-fit h-fit rounded">
-          <span className="text-xl font-semibold ">
-            Resize your cards to the size that suits
-          </span>
+          <span className="text-xl font-semibold ">Resize cards</span>
           <Image
             src="/gib.gif"
             width={700}
