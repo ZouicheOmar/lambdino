@@ -14,7 +14,7 @@ export default function Hero() {
           height={37}
           priority
         />
-        <p className="text-5xl font-semibold text-center">
+        <p className="text-3xl md:text-5xl font-semibold text-center">
           Your personal repo for small text data
         </p>
         <p className="text-2xl lg:w-1/3 opacity-70 text-center">

@@ -27,7 +27,7 @@ const HomeButton = () => {
         className="relative h-fit dark:drop-shadow-[0.5rem_0_0.5rem_#64748b75] light:invert"
         src="/logo.svg"
         alt="Mess board Logo"
-        width={100}
+        width={120}
         height={10}
         priority
       />
@@ -36,8 +36,7 @@ const HomeButton = () => {
 }
 
 export default function Nav() {
-  const {isLoaded, isSignedIn, user} = useUser()
-  const pathname = usePathname()
+  const {user} = useUser()
 
   return (
     <div className="w-full flex justify-between ">

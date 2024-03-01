@@ -5,7 +5,8 @@ import Footer from "@/components/Footer"
 export default function Page() {
   return (
     <>
-      <div className="md:p-10 mt-[5rem] max-w-5xl mb-[10rem] flex mx-auto flex-col gap-4">
+      <div className="md:p-10 mt-[4rem] max-w-5xl mb-[10rem] flex mx-auto flex-col gap-4">
+        <p className="font-mono text-3xl">about/</p>
         <div className="bg-secondary/45  p-2 rounded">
           <p className="text-lg font-semibold">What is Mess Board</p>
           <p className="text-pretty">
