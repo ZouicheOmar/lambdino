@@ -1,5 +1,4 @@
 /** @format */
-
 import Image from "next/image"
 
 export default function Hero() {
@@ -18,9 +17,11 @@ export default function Hero() {
           Your personal repo for small text data
         </p>
         <p className="text-2xl lg:w-1/3 opacity-70 text-center">
-          {/* Free from the constraint of keeping a everything in tidy folder */}
-          Free from the constraint of keeping a everything tidy
+          Free from the constraint of keeping everything tidy
         </p>
+        <button className="text-lg border rounded bg-secondary px-2 py-1">
+          try it out
+        </button>
       </div>
     </>
   )

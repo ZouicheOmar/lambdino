@@ -1,14 +1,14 @@
 /** @format */
 
-import type {Metadata} from "next"
-import {ClerkProvider, currentUser} from "@clerk/nextjs"
+import type { Metadata } from "next"
+import { ClerkProvider, currentUser } from "@clerk/nextjs"
 
-import {ThemeProvider} from "@/components/theme-provider"
-import {Inter} from "next/font/google"
+import { ThemeProvider } from "@/components/theme-provider"
+import { Inter } from "next/font/google"
 import "./globals.css"
 import React from "react"
 
-const inter = Inter({subsets: ["greek"]})
+const inter = Inter({ subsets: ["greek"] })
 
 export const metadata: Metadata = {
   title: "Mess Board",

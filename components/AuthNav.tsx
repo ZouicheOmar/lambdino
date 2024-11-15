@@ -1,6 +1,6 @@
 /** @format */
 
-import {currentUser, UserButton} from "@clerk/nextjs"
+import { currentUser, UserButton } from "@clerk/nextjs"
 import Link from "next/link"
 
 type NavLinkeProps = {
@@ -9,7 +9,7 @@ type NavLinkeProps = {
 }
 
 const NavLink = (props: NavLinkeProps) => {
-  const {href, text} = props
+  const { href, text } = props
   return (
     <Link
       href={href}

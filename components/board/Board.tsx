@@ -1,12 +1,12 @@
 /** @format */
-import {useEffect} from "react"
-import {useShallow} from "zustand/react/shallow"
+import { useEffect } from "react"
+import { useShallow } from "zustand/react/shallow"
 
-import {useCardStore} from "@/stores/cards"
+import { useCardStore } from "@/stores/cards"
 import useUiStore from "@/stores/uiStore"
 
-import {motion} from "framer-motion"
-import {ContextMenu, ContextMenuTrigger} from "@radix-ui/react-context-menu"
+import { motion } from "framer-motion"
+import { ContextMenu, ContextMenuTrigger } from "@radix-ui/react-context-menu"
 import ImageCard from "../cards/Image"
 
 import Note from "../cards/Note"
@@ -17,7 +17,7 @@ import BoardContextMenu from "../contextMenus/BoardContextMenu"
 import Url from "../cards/Url"
 
 export default function Board() {
-  const {zoom, setInsertImageX, setInsertImageY} = useUiStore(
+  const { zoom, setInsertImageX, setInsertImageY } = useUiStore(
     useShallow((s) => ({
       zoom: s.zoom,
       setInsertImageX: s.setInsertImageX,
