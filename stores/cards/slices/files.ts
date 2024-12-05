@@ -1,11 +1,9 @@
 /** @format */
 
-import {openDrawer} from "@/utils/positions"
+import { openDrawer } from "@/utils/positions"
 
-import {writeBoards} from "@/utils/writeBoard"
-
-import {toast} from "sonner"
-import {useUserStore} from "@/stores/user"
+import { toast } from "sonner"
+import { useUserStore } from "@/stores/user"
 
 export const filesSlice = (set, get) => ({
   fileName: "",
@@ -27,8 +25,8 @@ export const filesSlice = (set, get) => ({
   },
 
   async writeThisFile(showToast = true) {
-    const {cards, getCards, fileName, closedBoards} = get()
-    const userId = useUserStore.getState().userId
+    const { cards, getCards, fileName, closedBoards } = get()
+    // const userId = useUserStore.getState().userId
 
     const request = {
       RequestItems: {
@@ -65,39 +63,7 @@ export const filesSlice = (set, get) => ({
       request.RequestItems.messBoard.push(input)
     }
 
-    const saving = await writeBoards(request)
     toast.success("saved")
-    //makeRequestInput for cards
-    //if closedBoards.length > 1
-    // makeRequestInput foreach element
-
-    //when done, return the total request item
-
-    // if (fileName === "") {
-    //   toast.error("Can't save, not in a board", {})
-    //   return
-    // }
-
-    // const data = {
-    //   cards: cards,
-    // }
   },
 
-  // async createFile(fileName: string) {
-  //   const getCards = get().getCards
-  //   const data = {
-  //     fileName: fileName,
-  //   }
-
-  //   await axios
-  //     .post(ROUTES.CREATE_FILE, data, AXIOS_CONFIG)
-  //     .then((res) => {
-  //       console.log(`file supposedly created : ${res.data}`)
-  //       getCards(fileName)
-  //       closeDrawer()
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // },
 })

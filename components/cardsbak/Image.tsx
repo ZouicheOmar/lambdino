@@ -1,13 +1,13 @@
 /** @format */
 
-import { useState } from "react"
+import {useState} from "react"
 
 import Image from "next/image"
 
-import { useCardStore } from "@/stores/cards"
+import {useCardStore} from "@/stores/cards"
 import useUiStore from "@/stores/uiStore"
 
-import { AnimatePresence, motion } from "framer-motion"
+import {AnimatePresence, motion} from "framer-motion"
 import RND from "./components/RND"
 
 import {
@@ -22,10 +22,10 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { SelectCheckbox } from "@/components/cards/components/TopIcons"
-import { useUserStore } from "@/stores/user"
+import {Input} from "@/components/ui/input"
+import {Button} from "@/components/ui/button"
+import {SelectCheckbox} from "@/components/cards/components/TopIcons"
+import {useUserStore} from "@/stores/user"
 
 const AddTitleDialog = (props) => {
   return (
@@ -40,13 +40,13 @@ const AddTitleDialog = (props) => {
 }
 
 const CardContextMenu = (props) => {
-  const { id, showTitleState } = props
+  const {id, showTitleState} = props
   const cards = useCardStore((s) => s.cards)
   const deleteCard = useCardStore((s) => s.deleteCard)
   const updateTitle = useCardStore((s) => s.updateTitle)
 
-  const { title } = cards[id]
-  const { setShowTitle } = showTitleState
+  const {title} = cards[id]
+  const {setShowTitle} = showTitleState
 
   const handlePointerDown = () => {
     setTimeout(() => {
@@ -94,16 +94,16 @@ const CardContextMenu = (props) => {
 }
 
 const Title = (props) => {
-  const { showTitle, title } = props
+  const {showTitle, title} = props
 
   return (
     <AnimatePresence>
       {showTitle && (
         <motion.span
-          initial={{ y: -5, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -5, opacity: 0 }}
-          transition={{ duration: 0.1 }}
+          initial={{y: -5, opacity: 0}}
+          animate={{y: 0, opacity: 1}}
+          exit={{y: -5, opacity: 0}}
+          transition={{duration: 0.1}}
           className="absolute -bottom-[8px] left-[4px] px-2 py-0 rounded-[8px] text-sm bg-slate-900/95 text-white"
         >
           {title}
@@ -114,18 +114,17 @@ const Title = (props) => {
 }
 
 export default function ImageCard(props) {
-  const { id } = props
+  const {id} = props
   const cards = useCardStore((s) => s.cards)
   const putOnTop = useCardStore((s) => s.putOnTop)
   const openBoard = useCardStore((s) => s.openBoard)
-  // const userId = useUserStore((s) => s.userId)
+  const userId = useUserStore((s) => s.userId)
   const uiCards = useUiStore((s) => s.uiCards)
   const select = useUiStore((s) => s.select)
 
-  const { title, src } = cards[id]
+  const {title} = cards[id]
 
-  // const src = `https://${process.env.NEXT_PUBLIC_AWS_BUCKET_URL}/${userId}_${openBoard}_${id}`
-  // const src = "./logo.svg";
+  const src = `https://${process.env.NEXT_PUBLIC_AWS_BUCKET_URL}/${userId}_${openBoard}_${id}`
 
   const [show, setShow] = useState(false)
   const [showTitle, setShowTitle] = useState(false)
@@ -154,7 +153,10 @@ export default function ImageCard(props) {
         <ContextMenu>
           <ContextMenuTrigger>
             <div
-              className={`w-full bg-black h-full p-1 ${select && uiCards[id].selected && "bg-indigo-500 "} rounded-[8px] transition-all duration-100`}
+              className={`w-full h-full p-1 ${
+                select && uiCards[id].selected && "bg-indigo-500 "
+              }
+                      rounded-[8px]  bg-neutral-300 transition-all duration-100`}
               onPointerEnter={displayTitle}
               onPointerDown={handlePointerDown}
             >
@@ -173,7 +175,7 @@ export default function ImageCard(props) {
               <Title title={title} showTitle={showTitle} />
             </div>
           </ContextMenuTrigger>
-          <CardContextMenu id={id} showTitleState={{ showTitle, setShowTitle }} />
+          <CardContextMenu id={id} showTitleState={{showTitle, setShowTitle}} />
         </ContextMenu>
       </Dialog>
     </RND>

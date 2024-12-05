@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { useShallow } from "zustand/react/shallow"
 
 import { useCardStore } from "@/stores/cards"
+import useInitBoard from "@/hooks/useInitBoard"
 import useUiStore from "@/stores/uiStore"
 
 import { motion } from "framer-motion"
@@ -17,6 +18,7 @@ import BoardContextMenu from "../contextMenus/BoardContextMenu"
 import Url from "../cards/Url"
 
 export default function Board() {
+  /*UI*/
   const { zoom, setInsertImageX, setInsertImageY } = useUiStore(
     useShallow((s) => ({
       zoom: s.zoom,
@@ -79,9 +81,6 @@ export default function Board() {
                 }
               })}
           </motion.div>
-          {/* <motion.div drag>
-            <Tweet id="1758296631345139939"/>
-          </motion.div> */}
           <BoardContextMenu />
         </ContextMenuTrigger>
       </ContextMenu>

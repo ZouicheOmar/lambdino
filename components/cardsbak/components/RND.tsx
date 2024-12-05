@@ -1,24 +1,24 @@
 /** @format */
 
-import { useCallback, useEffect } from "react"
-import { useShallow } from "zustand/react/shallow"
+import {useCallback, useEffect} from "react"
+import {useShallow} from "zustand/react/shallow"
 
-import { motion, useAnimate, useDragControls } from "framer-motion"
-import { Resizable } from "re-resizable"
+import {motion, useAnimate, useDragControls} from "framer-motion"
+import {Resizable} from "re-resizable"
 
-import { useCardStore } from "@/stores/cards"
+import {useCardStore} from "@/stores/cards"
 import useUiStore from "@/stores/uiStore"
 
-import { DragIcon } from "@/components/Icons"
-import { pixelToNum } from "@/utils/positions"
+import {DragIcon} from "@/components/Icons"
+import {pixelToNum} from "@/utils/positions"
 
 export default function RND(props) {
-  const { children, id } = props
+  const {children, id} = props
   const [divScope, animate] = useAnimate()
   const dragControls = useDragControls()
 
   const select = useUiStore((s) => s.select)
-  const { cards, setSize, putOnTop, setFolded, setPosition } = useCardStore(
+  const {cards, setSize, putOnTop, setFolded, setPosition} = useCardStore(
     useShallow((s) => ({
       cards: s.cards,
       setSize: s.setSize,
@@ -29,7 +29,7 @@ export default function RND(props) {
   )
 
   const card = cards[id]
-  const { position, size, type } = card
+  const {position, size, type} = card
 
   useEffect(() => {
     animate(divScope.current, {
@@ -43,8 +43,8 @@ export default function RND(props) {
   }
 
   const handleDragEnd = useCallback((e, info) => {
-    const { x, y } = info.offset
-    const { top, left } = position
+    const {x, y} = info.offset
+    const {top, left} = position
     const new_pos = {
       top: top + y,
       left: left + x,
@@ -83,8 +83,8 @@ export default function RND(props) {
     >
       <Resizable
         id={id + "-rnd"}
-        size={size}
-        // size={type === "image" ? undefined : size}
+        // size={size}
+        size={type === "image" ? undefined : size}
         onResizeStop={handleResizeStop}
         enable={{
           bottom: true,

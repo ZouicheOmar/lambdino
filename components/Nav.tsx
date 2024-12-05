@@ -1,8 +1,6 @@
 /** @format */
-
-import {UserButton, useUser} from "@clerk/nextjs"
 import Link from "next/link"
-import {usePathname} from "next/navigation"
+import { usePathname } from "next/navigation"
 import Image from "next/image"
 import SideNav from "./SideNav"
 
@@ -12,7 +10,7 @@ type NavLinkProps = {
 }
 
 const NavLink = (props: NavLinkProps) => {
-  const {href, text} = props
+  const { href, text } = props
   return (
     <Link href={href} className="px-2 py-1 transition-colors duration-200">
       {text}
@@ -36,7 +34,6 @@ const HomeButton = () => {
 }
 
 export default function Nav() {
-  const {user} = useUser()
 
   return (
     <div className="w-full flex justify-between ">
@@ -44,13 +41,6 @@ export default function Nav() {
       <SideNav />
       <div className="hidden md:flex w-fit  gap-6 text-sm">
         <NavLink href="/about" text="About" />
-        {!user && (
-          <>
-            <NavLink href="/sign-in" text="Sign In" />
-            <NavLink href="/sign-up" text="Sign Up" />
-          </>
-        )}
-        {user && <UserButton afterSignOutUrl="/" />}
       </div>
     </div>
   )

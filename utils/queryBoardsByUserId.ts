@@ -1,8 +1,9 @@
 /** @format */
 
-import {dbclient} from "./dbClient"
-import {QueryCommand} from "@aws-sdk/client-dynamodb"
+import { dbclient } from "./dbClient"
+import { QueryCommand } from "@aws-sdk/client-dynamodb"
 
+/*FIX: là où typer aurait été cool psq ça m'aurait donné la forme de la donné retournée mais bon*/
 export async function queryBoardsByUserId(userId: string) {
   console.log("WARNING : CALL TO DYNAMODB")
   try {

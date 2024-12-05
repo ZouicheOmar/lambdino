@@ -1,13 +1,11 @@
 /** @format */
 
 import axios from "axios"
-import {create} from "zustand"
-import {immer} from "zustand/middleware/immer"
-import {animate} from "framer-motion"
+import { create } from "zustand"
+import { immer } from "zustand/middleware/immer"
+import { animate } from "framer-motion"
+import { useCardStore } from "./cards"
 
-import {useCardStore} from "./cards"
-
-import {AXIOS_CONFIG} from "@/lib/constants"
 const useUiStore = create(
   immer((set, get) => ({
     files_list: "",
@@ -36,7 +34,6 @@ const useUiStore = create(
 
     uiState: () => {
       const uicards = get().uiCards
-      console.log("uicards", uicards)
     },
 
     setTX: (value, element) => {
@@ -97,13 +94,13 @@ const useUiStore = create(
         }
       })
     },
-    zoomReset: () => set(() => ({zoom: 1})),
+    zoomReset: () => set(() => ({ zoom: 1 })),
 
-    setMx: (value) => set(() => ({mx: value})),
-    setMy: (value) => set(() => ({my: value})),
+    setMx: (value) => set(() => ({ mx: value })),
+    setMy: (value) => set(() => ({ my: value })),
 
-    setInsertImageX: (value) => set(() => ({insertImageX: value})),
-    setInsertImageY: (value) => set(() => ({insertImageY: value})),
+    setInsertImageX: (value) => set(() => ({ insertImageX: value })),
+    setInsertImageY: (value) => set(() => ({ insertImageY: value })),
 
     center: () => {
       const board = document.getElementById("board")
@@ -114,7 +111,7 @@ const useUiStore = create(
           x: 0,
           y: 0,
         },
-        {duration: 0.3}
+        { duration: 0.3 }
       )
 
       setTimeout(() => {
@@ -133,7 +130,7 @@ const useUiStore = create(
         // const id = Object.entries(cards)[i][0]
         const card = Object.entries(cards)[i][1]
         const {
-          position: {top, left},
+          position: { top, left },
         } = card
       }
     },
@@ -176,6 +173,7 @@ const useUiStore = create(
     },
 
     getFiles: async () => {
+      /*FIX: c'est quoi là ?*/
       axios
         .get(ROUTES.FILES_LIST, AXIOS_FORMDATA_CONFIG)
         .then((res) => {
@@ -184,7 +182,6 @@ const useUiStore = create(
           })
         })
         .catch((err) => {
-          console.log("problem while trying to get files", err)
         })
     },
 
@@ -194,7 +191,7 @@ const useUiStore = create(
 
     addUiCard: (card) => {
       set((state) => {
-        state.uiCards = {...state.uiCards, ...card}
+        state.uiCards = { ...state.uiCards, ...card }
       })
     },
 
@@ -205,18 +202,14 @@ const useUiStore = create(
     },
 
     initCards: () => {
-      const cards = useCardStore.getState().cards
-      const cards_array = Object.entries(cards)
-
+      const cards = useCardStore.getState().cards;
+      let cards_array = Object.entries(cards);
       let emptyList = {}
 
-      for (let i = 0; i < cards_array.length; i++) {
-        const {type, id} = cards_array[i][1]
-        if (type === "image") {
-        }
-        // const id = cards_array[i][0]
-        const {top, left} = cards_array[i][1].position
-        const {width, height} = cards_array[i][1]?.size
+      Object.entries(cards).forEach((card) => {
+        const { type, id,
+          position: { top, left },
+          size: { width, height } } = card[1];
         const obj = {
           [id]: {
             selected: false,
@@ -226,13 +219,11 @@ const useUiStore = create(
             height: height ?? 100,
           },
         }
-
-        emptyList = {...emptyList, ...obj}
-      }
-
-      set((state) => {
-        state.uiCards = {...emptyList}
+        emptyList = { ...emptyList, ...obj }
       })
+      set((state) => {
+        state.uiCards = { ...emptyList }
+      });
     },
 
     toggleSelectCard: (id, value) => {

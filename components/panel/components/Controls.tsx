@@ -1,12 +1,11 @@
 /** @format */
-import {useCardStore} from "@/stores/cards"
-import useUiStore from "@/stores/uiStore"
+import { useShallow } from "zustand/react/shallow"
 
+import { useCardStore } from "@/stores/cards"
+import useUiStore from "@/stores/uiStore"
 import usePositions from "@/hooks/usePositions"
 
-import {useShallow} from "zustand/react/shallow"
-
-import {Button} from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   LayersIcon,
   CornerTopLeftIcon,
@@ -16,8 +15,10 @@ import {
   ExitFullScreenIcon,
   CrumpledPaperIcon,
 } from "@radix-ui/react-icons"
-import {FitScreenIcon} from "@/components/Icons"
-import {getRectById} from "@/utils/positions"
+import { FitScreenIcon } from "@/components/Icons"
+
+import { getRectById } from "@/utils/positions"
+import { use } from "react"
 
 export default function Controls() {
   const {
@@ -76,11 +77,12 @@ export default function Controls() {
     }))
   )
 
+  const cards = useCardStore((s) => s.cards);
+
   const updatePositions = usePositions()
 
   const handleSave = () => {
-    // updatePositions()
-    writeThisFile()
+    console.log("cards from saved :", cards)
   }
 
   const focusOff = () => {
@@ -104,11 +106,6 @@ export default function Controls() {
   if (fileName) {
     return (
       <>
-        {/*
-        <Button onPointerDown={organize} id="organize_button">
-          organize
-          <LayersIcon className="ml-2 h-4 w-4" />
-        </Button> */}
         <Button
           id="originButton"
           onPointerDown={topLeft}
@@ -117,32 +114,12 @@ export default function Controls() {
           origin
           <CornerTopLeftIcon className="fill-white duration-300 ml-2  h-4 w-4" />
         </Button>
-        {/* <Button
-          id="FitButton"
-          onPointerDown={handleZoomToFit}
-          className="animate-in fade-in slide-in-from-left-5 duration-100"
-        >
-          fit
-          <FitScreenIcon className="fill-white duration-300 ml-2  h-4 w-4" />
-        </Button> */}
-        <Button
-          onPointerDown={handleSave}
-          id="saveButton"
-          className="group animate-in fade-in slide-in-from-left-5 duration-100 "
-        >
-          save
-          <DotFilledIcon className="group-hover:animate-wiggle ml-2 mt-[2px] h-4 w-4" />
-        </Button>
         <Button
           onPointerDown={toggleSelect}
           className={` animate-in fade-in slide-in-from-left-5 duration-300 overflow-hidden `}
         >
           select
-          <CheckIcon
-          //   className={`${
-          //      select && "stroke-indigo-500"
-          //   } transition-colors duration-300 ml-2  h-4 w-4`}
-          />
+          <CheckIcon />
         </Button>
         {select && (
           <>
@@ -155,7 +132,6 @@ export default function Controls() {
             <Button
               onPointerDown={deselectAll}
               className="animate-in fade-in slide-in-from-left-5 duration-300 "
-              //  disabled={anySelected !== 0 ? false : true}
             >
               deselect
             </Button>
@@ -171,7 +147,6 @@ export default function Controls() {
             <Button
               onPointerDown={deleteSelected}
               className="group animate-in hover:text-red-500 fade-in slide-in-from-left-5 transition-all duration-300  "
-              //  disabled={anySelected !== 0 ? false : true}
             >
               delete
               <CrumpledPaperIcon className=" ml-2 mt-[2px] h-4 w-4 transition-all duration-0 " />
@@ -179,25 +154,37 @@ export default function Controls() {
             <Button
               onPointerDown={foldSelected}
               className="animate-in fade-in slide-in-from-left-5 transition-all duration-300  "
-              //  disabled={anySelected !== 0 ? false : true}
+              disabled
             >
               fold / unfold
             </Button>
           </>
         )}
-        {/* {focused && (
-          <span className="w-full flex justify-around">
-            <Button variant="outline" size="icon" OnPointerDown={focusPrevious}>
-              <ChevronDownIcon className="rotate-90" />
-            </Button>
-            <Button variant="outline" size="icon" onPointerDown={focusOff}>
-              <ExitFullScreenIcon />
-            </Button>
-            <Button variant="outline" size="icon" OnPointerDown={focusNext}>
-              <ChevronDownIcon className="-rotate-90" />
-            </Button>
-          </span>
-        )} */}
+        <Button onPointerDown={organize}
+          id="organize_button"
+          disabled
+        >
+          organize
+          <LayersIcon className="ml-2 h-4 w-4" />
+        </Button>
+        <Button
+          id="FitButton"
+          onPointerDown={handleZoomToFit}
+          className="animate-in fade-in slide-in-from-left-5 duration-100"
+          disabled
+        >
+          fit
+          <FitScreenIcon className="fill-white duration-300 ml-2  h-4 w-4" />
+        </Button>
+        <Button
+          onPointerDown={handleSave}
+          id="saveButton"
+          className="group animate-in fade-in slide-in-from-left-5 duration-100 "
+        // disabled
+        >
+          save
+          <DotFilledIcon className="group-hover:animate-wiggle ml-2 mt-[2px] h-4 w-4" />
+        </Button>
       </>
     )
   }

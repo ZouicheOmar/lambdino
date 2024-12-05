@@ -1,6 +1,6 @@
 /** @format */
 
-import {animate} from "framer-motion"
+import { animate } from "framer-motion"
 import useUiStore from "@/stores/uiStore"
 
 export const foldSlice = (set, get) => ({
@@ -9,7 +9,6 @@ export const foldSlice = (set, get) => ({
       state.cards[id].folded = value
     })
   },
-  //remove updateFolded
   toggleFoldCard(id) {
     const card = get().cards[id]
     const card_rnd = document.getElementById(id + "-rnd")
@@ -44,7 +43,6 @@ export const foldSlice = (set, get) => ({
       )
 
       set((state) => {
-        // state.cards[id].size = card.size
         state.cards[id].folded = true
       })
     }

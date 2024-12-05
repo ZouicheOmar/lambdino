@@ -1,20 +1,15 @@
 /** @format */
-import {useEffect} from "react"
-import {useAuth} from "@clerk/nextjs"
+import { useEffect } from "react"
 
-import {useCardStore} from "@/stores/cards"
-import {useUserStore} from "@/stores/user"
+import { useCardStore } from "@/stores/cards"
+import { useUserStore } from "@/stores/user"
 
 export default function useInitBoard() {
-  const setBoardsList = useCardStore((s) => s.setBoardsList)
-
-  const setUserId = useUserStore((s) => s.setUserId)
-  const {userId: clerkUserId} = useAuth()
-
+  const setBoards = useCardStore((s) => s.setBoards);
+  const boards = useCardStore((s) => s.boards);
+  const getCards = useCardStore((s) => s.getCards)
   useEffect(() => {
-    if (clerkUserId) {
-      setUserId(clerkUserId)
-      setBoardsList(clerkUserId)
-    }
-  }, [clerkUserId])
+    setBoards()
+    boards.length && getCards(boards[0]);
+  }, [boards])
 }

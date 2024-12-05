@@ -1,17 +1,16 @@
 /** @format */
 
-import {useState, useEffect} from "react"
-import {useAuth} from "@clerk/nextjs"
-// import {useShallow} from "zustand/react/shallow"
+import { useState, useEffect } from "react"
+import { useAuth } from "@clerk/nextjs"
 
-import {useCardStore} from "@/stores/cards"
+import { useCardStore } from "@/stores/cards"
 import useUiStore from "@/stores/uiStore"
 
-import {closeDrawer} from "@/utils/positions"
+import { closeDrawer } from "@/utils/positions"
 
 import putBoard from "@/utils/putBoard"
 
-import {Button} from "@/components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Drawer as DrawerMenu,
   DrawerClose,
@@ -21,18 +20,18 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog"
-import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   CheckCircledIcon,
   Cross2Icon,
   EyeOpenIcon,
   FileIcon,
 } from "@radix-ui/react-icons"
-import {Toaster, toast} from "sonner"
-import {useUserStore} from "@/stores/user"
-import {Input} from "../ui/input"
-import {Badge} from "../ui/badge"
+import { Toaster, toast } from "sonner"
+import { useUserStore } from "@/stores/user"
+import { Input } from "../ui/input"
+import { Badge } from "../ui/badge"
 
 const FilesList = () => {
   const getCards = useCardStore((s) => s.getCards)
@@ -45,9 +44,7 @@ const FilesList = () => {
     closeDrawer()
     topLeft()
   }
-
   const boards = useCardStore((s) => s.boards)
-  useEffect(() => {}, [])
 
   return (
     <TabsContent value="files">
@@ -56,7 +53,6 @@ const FilesList = () => {
           {boards.length ? (
             boards.map((item, index) => (
               <li
-                // className="hover:bg-accent rounded cursor-pointer transition-colors h-[1.5rem] px-2 flex items-center justify-between"
                 className="hover:bg-accent rounded cursor-pointer transition-colors px-2 py-1 flex items-center justify-between"
                 key={index}
                 onClick={(e) => handleSelectItem(e, item)}
@@ -82,7 +78,7 @@ const FilesList = () => {
 }
 
 const ImageList = () => {
-  const {getImagesList, imagesList, cards} = useCardStore()
+  const { getImagesList, imagesList, cards } = useCardStore()
 
   useEffect(() => {
     getImagesList()
@@ -123,9 +119,8 @@ const ImageList = () => {
                   <div className="p-1 rounded-[8px]   bg-neutral-300 transition-all duration-100">
                     <img
                       id={`${item}-image`}
-                      src={`http://localhost:${
-                        import.meta.env.VITE_PORT
-                      }/${item}`}
+                      src={`http://localhost:${import.meta.env.VITE_PORT
+                        }/${item}`}
                       // alt={cards[item].title || "image card"}
                       alt={"image card"}
                       className=" object-scale-down rounded-[6px]"
@@ -196,12 +191,13 @@ const BodyCreateNewFile = () => {
         onSubmit={handlecreateFile}
       >
         <Input
+          disabled
           type="text"
           placeholder="my new board"
           value={value}
           onChange={handleChange}
         />
-        <Button type="submit">add</Button>
+        <Button disabled type="submit">add</Button>
       </form>
       {errorMessage && (
         <p className="mt-1 animate-in fade-in-10 duration-500 bg-destructive/35 border rounded border-destructive text-destructive-foreground p-1 text-sm">
@@ -225,31 +221,9 @@ const BodyRight = () => {
   return (
     <div className="w-full md:w-3/5 md:h-full ">
       <div className="w-full h-full flex flex-col gap-6 p-3 border rounded-lg">
-        {/* <p>
-          This is mess board, add basic text cards, markdown cards, some code
-          snippets and images.
-          <br />
-        </p> */}
         <div>
           <p> ⌨ Controls </p>
           <ul className="pl-2">
-            {/* <li>
-              <Badge variant="shortcut">ctrl</Badge>+
-              <Badge variant="shortcut">Q</Badge>
-              or W or E : focus on card with a shortcut
-            </li>
-            <li>
-              {" "}
-              <Badge variant="shortcut">ctrl</Badge>+
-              <Badge variant="shortcut">J</Badge> or{" "}
-              <Badge variant="shortcut">K</Badge> : toggle focus between cards
-            </li> 
-            <li>
-              {" "}
-              <Badge variant="shortcut">ctrl</Badge>+
-              <Badge variant="shortcut">Z</Badge> : fit screen
-            </li>
-            */}
             <li>
               {" "}
               <Badge variant="shortcut">ctrl</Badge>+
@@ -276,7 +250,6 @@ const Trigger = () => {
   return (
     <DrawerTrigger asChild>
       <Button
-        onPointerDown={() => console.log("clicked")}
         id="drawerMenu"
         className="animate-in fade-in slide-in-from-left-5 duration-100 outline-none"
       >
@@ -322,7 +295,6 @@ const Body = () => {
     <>
       <DrawerContent
         className="text-sm border-none  ring-none outline-none h-full "
-        onPointerDown={() => console.log("clicked on drawer body")}
       >
         <BodyHeader />
         <div className="flex flex-col md:flex-row flex-grow min-w-full h-full gap-3 px-4 py-0  ">

@@ -1,8 +1,8 @@
 /** @format */
+import { useCallback, useEffect } from "react"
 import useUiStore from "@/stores/uiStore"
-import {useCardStore} from "@/stores/cards"
-import {getRectById} from "../utils/positions"
-import {useCallback} from "react"
+import { useCardStore } from "@/stores/cards"
+import { getRectById } from "../utils/positions"
 
 export default function usePointer() {
   const selectModeOff = useUiStore((s) => s.selectModeOff)
@@ -44,5 +44,10 @@ export default function usePointer() {
     }
   }
 
-  return {handlePointerDown, handlePointerMove}
+  useEffect(() => {
+    document.addEventListener("pointermove", handlePointerMove);
+    return () => document.removeEventListener("pointermove", handlePointerMove);
+  }, [])
+
+  return { handlePointerDown, handlePointerMove }
 }

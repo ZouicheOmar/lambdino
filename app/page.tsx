@@ -9,27 +9,23 @@ import useInitBoard from "@/hooks/useInitBoard"
 
 import Panel from "@/components/panel/Panel"
 import Board from "@/components/board/Board"
-import {Toaster} from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner"
+import useUiStore from "@/stores/uiStore"
+import { useEffect } from "react"
+import Main from "@/components/Main"
 
 export default function Page() {
   useHotkey()
   useZoom()
-  useInitBoard()
-
+  useInitBoard();
   const handleWheel = useScroll()
-  const {handlePointerDown, handlePointerMove} = usePointer()
+  const { handlePointerDown, handlePointerMove } = usePointer()
 
   return (
-    <div
-      className="fixed w-full h-full top-0 left-0 m-0 pl-[11rem] pt-[2rem] box-border flex bg-slate-800"
-      onWheel={handleWheel}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      id="mainWrapper"
-    >
+    <Main>
       <Panel />
       <Board />
       <Toaster />
-    </div>
+    </Main>
   )
 }

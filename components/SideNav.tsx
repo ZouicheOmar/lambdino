@@ -1,7 +1,7 @@
 /** @format */
 "use client"
-import {useState} from "react"
-import {useRouter} from "next/navigation"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 import {
   Sheet,
@@ -12,8 +12,8 @@ import {
 
 import Link from "next/link"
 
-import {HamburgerMenuIcon} from "@radix-ui/react-icons"
-import {Button} from "./ui/button"
+import { HamburgerMenuIcon } from "@radix-ui/react-icons"
+import { Button } from "./ui/button"
 
 export default function SideNav() {
   const [open, setOpen] = useState(false)
@@ -28,8 +28,10 @@ export default function SideNav() {
         <HamburgerMenuIcon className="md:hidden w-4 h-full scale-125" />
       </SheetTrigger>
       <SheetContent className="flex flex-col gap-2 pt-16">
+        {/*
         <Button onPointerDown={() => handleSelect("/sign-up")}>Sign Up</Button>
         <Button onPointerDown={() => handleSelect("/sign-in")}>Sign In</Button>
+        */}
         <Button onPointerDown={() => handleSelect("/about")}>About</Button>
       </SheetContent>
     </Sheet>

@@ -1,40 +1,20 @@
 /** @format */
 
-import {queryBoardsByUserId} from "@/utils/queryBoardsByUserId"
+import { queryBoardsByUserId } from "@/utils/queryBoardsByUserId"
 import putBoard from "@/utils/putBoard"
-import {useUserStore} from "@/stores/user"
-import {closeDrawer} from "@/utils/positions"
+import { useUserStore } from "@/stores/user"
+import { closeDrawer } from "@/utils/positions"
+import { DEMO_BOARD_LIST } from "@/lib/constants"
 
 export const boardsSlice = (set, get) => ({
-  openBoard: "", //current session openned board
-  closedBoards: {}, //current session closed boards, this will save the boards and their content
-  boards: [], //boards list
+  openBoard: "",
+  closedBoards: {},
+  boards: [],
 
-  async setBoardsList(userId) {
-    queryBoardsByUserId(userId)
-      .then((res) => {
-        if (res.length === 0) {
-          return
-        }
-        const newState = []
-        // const list = JSON.parse(res)
-        const list = res
-
-        set((s) => {
-          for (let i = 0; i < list.length; i++) {
-            const {
-              board: {S},
-            } = list[i]
-            newState.push(S)
-          }
-
-          s.boards = newState
-        })
-      })
-      .catch((err) => {
-        console.log(err)
-        throw err
-      })
+  setBoards() {
+    return set((state) => {
+      state.boards = DEMO_BOARD_LIST;
+    })
   },
 
   async createBoard(boardName: string) {
